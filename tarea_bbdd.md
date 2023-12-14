@@ -61,7 +61,7 @@ Como resultado da la siguiente tabla:
 
 <div align=center>
 
-![all_data_table](/img/all_data_table.png)
+![paso3-1](/img/paso3-1.png)
 
 </div>
 
@@ -75,7 +75,7 @@ Dando como resultado:
 
 <div align=center>
 
-![50_more](/img/50_more.png)
+![paso3-2](/img/paso3-2.png)
 
 </div>
 
