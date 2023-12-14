@@ -79,3 +79,55 @@ Dando como resultado:
 
 </div>
 
+## Paso 4 - Eliminaciones y actualizaciones
+
+Para este último paso, se deben realizar la siguiente serie de modificaciones en la tabla Ejemplo:
+
+1. **Eliminar las entradas donde su valor booleano sea True:**
+
+```sql
+delete from Ejemplo where booleano = '1';
+```
+<div align=center>
+
+### Resultado
+![paso4-1](/img/paso4-1.png)
+
+</div>
+
+2. **Modifica el campo texto de las entradas donde el campo entero es menor a 30 y establece el texto como "Modificado":**
+
+```sql
+update Ejemplo set texto='Modificado' where entero < 30;
+```
+<div align=center>
+
+### Resultado
+![paso4-2](/img/paso4-2.png)
+
+</div>
+
+3. **Elimina las entradas donde el campo entero es igual a 50:**
+
+```sql
+delete from Ejemplo where entero='50';
+```
+<div align=center>
+
+### Resultado (Solo borra la entrada 45)
+![paso4-3](/img/paso4-3.png)
+
+</div>
+
+4. **Incrementa en 10 el valor del campo entero para las entradas donde el campo booleano es igual a False:**
+
+```sql
+update Ejemplo set entero=entero+10 where booleano='0';
+```
+
+<div align=center>
+
+### Resultado 
+![paso4-4](/img/paso4-4.png)
+
+</div>
