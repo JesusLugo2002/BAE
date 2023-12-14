@@ -50,3 +50,7 @@ table = '''1,Ejemplo1,25,10.5,2022-05-15,0
 50,Ejemplo50,75,85.3,2026-06-11,1'''
 
 splitted_table = table.split(',')
+items = []
+columns6 = 0
+
+print(f'insert into Ejemplo (texto,entero,decimal,fecha,booleano) values (\'{splitted_table[row][1]}\',\'{splitted_table[row][2]}\',\'{splitted_table[row][3]}\',\'{splitted_table[row][4]}\',\'{splitted_table[row][5]}\');')
