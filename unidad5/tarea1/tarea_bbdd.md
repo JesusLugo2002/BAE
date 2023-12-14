@@ -63,7 +63,7 @@ Como resultado da la siguiente tabla:
 
 <div align=center>
 
-![paso3-1](/img/paso3-1.png)
+![paso3-1](./img/paso3-1.png)
 
 </div>
 
@@ -77,7 +77,7 @@ Dando como resultado:
 
 <div align=center>
 
-![paso3-2](/img/paso3-2.png)
+![paso3-2](./img/paso3-2.png)
 
 </div>
 
@@ -93,7 +93,7 @@ delete from Ejemplo where booleano = '1';
 <div align=center>
 
 ### Resultado
-![paso4-1](/img/paso4-1.png)
+![paso4-1](./img/paso4-1.png)
 
 </div>
 
@@ -105,7 +105,7 @@ update Ejemplo set texto='Modificado' where entero < 30;
 <div align=center>
 
 ### Resultado
-![paso4-2](/img/paso4-2.png)
+![paso4-2](./img/paso4-2.png)
 
 </div>
 
@@ -117,7 +117,7 @@ delete from Ejemplo where entero='50';
 <div align=center>
 
 ### Resultado (Solo borra la entrada 45)
-![paso4-3](/img/paso4-3.png)
+![paso4-3](./img/paso4-3.png)
 
 </div>
 
@@ -130,7 +130,7 @@ update Ejemplo set entero=entero+10 where booleano='0';
 <div align=center>
 
 ### Resultado 
-![paso4-4](/img/paso4-4.png)
+![paso4-4](./img/paso4-4.png)
 
 </div>
 
@@ -143,7 +143,7 @@ delete from Ejemplo where decimal < 50;
 <div align=center>
 
 ### Resultado 
-![paso4-5](/img/paso4-5.png)
+![paso4-5](./img/paso4-5.png)
 
 </div>
 
@@ -156,6 +156,6 @@ update Ejemplo set fecha='2023-12-14';
 <div align=center>
 
 ### Resultado 
-![paso4-6](/img/paso4-6.png)
+![paso4-6](./img/paso4-6.png)
 
 </div>
