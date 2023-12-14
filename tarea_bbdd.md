@@ -131,3 +131,29 @@ update Ejemplo set entero=entero+10 where booleano='0';
 ![paso4-4](/img/paso4-4.png)
 
 </div>
+
+5. **Elimina las entradas donde el campo decimal es menor a 50:**
+
+```sql
+delete from Ejemplo where decimal < 50;
+```
+
+<div align=center>
+
+### Resultado 
+![paso4-5](/img/paso4-5.png)
+
+</div>
+
+6. **Actualiza el campo fecha de todas las entradas a la fecha actual:**
+
+```sql
+update Ejemplo set fecha='2023-12-14';
+```
+
+<div align=center>
+
+### Resultado 
+![paso4-6](/img/paso4-6.png)
+
+</div>
