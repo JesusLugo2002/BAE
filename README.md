@@ -9,6 +9,3 @@
 Aquí todos mis ficheros de la asignatura de bases de datos.
 
 </div>
-
-
-## Índice
