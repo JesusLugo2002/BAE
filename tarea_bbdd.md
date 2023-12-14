@@ -1,6 +1,6 @@
 # Tarea-práctica de bases de datos
 
-<div align=center>![gif](https://www.gifmaniacos.es/wp-content/uploads/2019/04/peces-gif-gifmaniacos.es-15.gif)</div>
+<div align=center>[gif](https://www.gifmaniacos.es/wp-content/uploads/2019/04/peces-gif-gifmaniacos.es-15.gif)</div>
 
 <div align=justify>
 
