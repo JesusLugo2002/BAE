@@ -76,7 +76,10 @@ Antes de continuar con las consultas solicitadas de la actividad, se configura e
 .headers on
 ```
 
-1. Seleccionar todos los propietarios: `select * from Propietarios;`
+1. Seleccionar todos los propietarios:
+```sql
+select * from Propietarios;
+```
 
 <div align="center">
 
@@ -84,15 +87,20 @@ Antes de continuar con las consultas solicitadas de la actividad, se configura e
 
 </div>
 
-2. Listar todos los vehículos: `select * from Vehiculos;`
-
+2. Listar todos los vehículos: 
+```sql
+select * from Vehiculos;
+```
 <div align="center">
 
 ![img](img/paso3-2.png)
 
 </div>
 
-3. Seleccionar solo los nombres y apellidos de los propietarios: `select nombre, apellido from Propietarios;`
+3. Seleccionar solo los nombres y apellidos de los propietarios:
+```sql
+select nombre, apellido from Propietarios;
+```
 
 <div align="center">
 
@@ -100,7 +108,10 @@ Antes de continuar con las consultas solicitadas de la actividad, se configura e
 
 </div>
 
-4. Listar todas las marcas y modelos de los vehículos: `select marca, modelo from Vehiculos;`
+4. Listar todas las marcas y modelos de los vehículos: 
+```sql
+select marca, modelo from Vehiculos;
+```
 
 <div align="center">
 
@@ -108,7 +119,10 @@ Antes de continuar con las consultas solicitadas de la actividad, se configura e
 
 </div>
 
-5. Seleccionar solo los propietarios con apellido "Perez": `select * from Propietarios where apellido='Perez';`
+5. Seleccionar solo los propietarios con apellido "Perez":
+```sql
+select * from Propietarios where apellido='Perez';
+```
 
 <div align="center">
 
@@ -116,7 +130,10 @@ Antes de continuar con las consultas solicitadas de la actividad, se configura e
 
 </div>
 
-6. Listar todos los vehículos con año 2019: `select * from Vehiculos where anio=2019;`
+6. Listar todos los vehículos con año 2019: 
+```sql
+select * from Vehiculos where anio=2019;
+```
 
 <div align="center">
 
@@ -124,7 +141,10 @@ Antes de continuar con las consultas solicitadas de la actividad, se configura e
 
 </div>
 
-7. Seleccionar propietarios que tienen vehículos de la marca "Toyota": `select * from Propietarios as prop, Vehiculos as veh where veh.id_propietario = prop.id and veh.marca='Toyota';`
+7. Seleccionar propietarios que tienen vehículos de la marca "Toyota":
+```sql
+select * from Propietarios as prop, Vehiculos as veh where veh.id_propietario = prop.id and veh.marca='Toyota';
+```
 
 <div align="center">
 
@@ -132,7 +152,10 @@ Antes de continuar con las consultas solicitadas de la actividad, se configura e
 
 </div>
 
-8. Listar vehículos con marca "Ford" y modelo "Fiesta": `select * from Vehiculos where marca='Ford' and modelo='Fiesta';`
+8. Listar vehículos con marca "Ford" y modelo "Fiesta": 
+```sql
+select * from Vehiculos where marca='Ford' and modelo='Fiesta';
+```
 
 <div align="center">
 
@@ -140,7 +163,10 @@ Antes de continuar con las consultas solicitadas de la actividad, se configura e
 
 </div>
 
-9. Seleccionar propietarios con DNI "12345678A": `select * from Propietarios where dni='12345678A';`
+9. Seleccionar propietarios con DNI "12345678A":
+```sql
+select * from Propietarios where dni='12345678A';
+```
 
 <div align="center">
 
@@ -148,7 +174,10 @@ Antes de continuar con las consultas solicitadas de la actividad, se configura e
 
 </div>
 
-10. Listar vehículos que pertenecen al propietario con ID 5: `select * from Vehiculos where id_propietario=5;`
+10. Listar vehículos que pertenecen al propietario con ID 5:
+```sql
+select * from Vehiculos where id_propietario=5;
+```
 
 <div align="center">
 
@@ -158,62 +187,87 @@ Antes de continuar con las consultas solicitadas de la actividad, se configura e
 
 ## Paso 4 - Modificaciones en las tablas
 
-1. Actualizar el nombre de un propietario con DNI "12345678A": `update Propietarios set nombre='Juanito' where dni='12345678A';`
+1. Actualizar el nombre de un propietario con DNI "12345678A":
+```sql
+update Propietarios set nombre='Juanito' where dni='12345678A';
+```
 
 <div align="center">
 
 **Antes del Update**
+
 ![img](img/paso4-1-bef.png)
 
 **Después del Update**
+
 ![img](img/paso4-1-aft.png)
 
 </div>
 
-2. Modificar el año de un vehículo con ID 3 a 2022: `update Vehiculos set anio=2022 where id=3;`
+2. Modificar el año de un vehículo con ID 3 a 2022:
+```sql
+update Vehiculos set anio=2022 where id=3;
+```
 
 <div align="center">
 
 **Antes del Update**
+
 ![img](img/paso4-2-bef.png)
 
 **Después del Update**
+
 ![img](img/paso4-2-aft.png)
 
 </div>
 
-3. Cambiar el modelo de todos los vehículos Nissan a "Micra": `update Vehiculos set modelo='Micra' where marca='Nissan';`
+3. Cambiar el modelo de todos los vehículos Nissan a "Micra":
+```sql
+update Vehiculos set modelo='Micra' where marca='Nissan';
+```
 
 <div align="center">
 
 **Antes del Update**
+
 ![img](img/paso4-3-bef.png)
 
 **Después del Update**
+
 ![img](img/paso4-3-aft.png)
 
 </div>
 
-4. Actualizar el apellido de un propietario con ID 7 a "Gomez": `update Propietarios set apellido='Gomez' where id=7;`
+4. Actualizar el apellido de un propietario con ID 7 a "Gomez":
+```sql
+update Propietarios set apellido='Gomez' where id=7;
+```
 
 <div align="center">
 
 **Antes del Update**
+
 ![img](img/paso4-4-bef.png)
 
 **Después del Update**
+
 ![img](img/paso4-4-aft.png)
 
 </div>
 
-5. Modificar la marca de un vehículo con modelo "Fiesta" a "Renault": `update Vehiculos set marca='Renault' where modelo='Fiesta';` 
+5. Modificar la marca de un vehículo con modelo "Fiesta" a "Renault":
+```sql
+update Vehiculos set marca='Renault' where modelo='Fiesta';
+``` 
 
 <div align="center">
 
 **Antes del Update**
+
 ![img](img/paso4-5-bef.png)
 
 **Después del Update**
+
 ![img](img/paso4-5-aft.png)
 
 </div>
