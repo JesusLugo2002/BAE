@@ -69,4 +69,153 @@ INSERT INTO Vehiculos(marca, modelo, anio, id_propietario) VALUES('Nissan','Mura
 
 ## Paso 3 - Consultas de datos
 
+Antes de continuar con las consultas solicitadas de la actividad, se configura el *.mode* y *.headers* en el sqlite3 (en mi caso, elegí el *mode box* porque se me hace más atractivo visualmente):
+
+```sql
+.mode box
+.headers on
+```
+
+1. Seleccionar todos los propietarios: `select * from Propietarios;`
+
+<div align="center">
+
+![img](img/paso3-1.png)
+
+</div>
+
+2. Listar todos los vehículos: `select * from Vehiculos;`
+
+<div align="center">
+
+![img](img/paso3-2.png)
+
+</div>
+
+3. Seleccionar solo los nombres y apellidos de los propietarios: `select nombre, apellido from Propietarios;`
+
+<div align="center">
+
+![img](img/paso3-3.png)
+
+</div>
+
+4. Listar todas las marcas y modelos de los vehículos: `select marca, modelo from Vehiculos;`
+
+<div align="center">
+
+![img](img/paso3-4.png)
+
+</div>
+
+5. Seleccionar solo los propietarios con apellido "Perez": `select * from Propietarios where apellido='Perez';`
+
+<div align="center">
+
+![img](img/paso3-5.png)
+
+</div>
+
+6. Listar todos los vehículos con año 2019: `select * from Vehiculos where anio=2019;`
+
+<div align="center">
+
+![img](img/paso3-6.png)
+
+</div>
+
+7. Seleccionar propietarios que tienen vehículos de la marca "Toyota": `select * from Propietarios as prop, Vehiculos as veh where veh.id_propietario = prop.id and veh.marca='Toyota';`
+
+<div align="center">
+
+![img](img/paso3-7.png)
+
+</div>
+
+8. Listar vehículos con marca "Ford" y modelo "Fiesta": `select * from Vehiculos where marca='Ford' and modelo='Fiesta';`
+
+<div align="center">
+
+![img](img/paso3-8.png)
+
+</div>
+
+9. Seleccionar propietarios con DNI "12345678A": `select * from Propietarios where dni='12345678A';`
+
+<div align="center">
+
+![img](img/paso3-9.png)
+
+</div>
+
+10. Listar vehículos que pertenecen al propietario con ID 5: `select * from Vehiculos where id_propietario=5;`
+
+<div align="center">
+
+![img](img/paso3-10.png)
+
+</div>
+
+## Paso 4 - Modificaciones en las tablas
+
+1. Actualizar el nombre de un propietario con DNI "12345678A": `update Propietarios set nombre='Juanito' where dni='12345678A';`
+
+<div align="center">
+
+**Antes del Update**
+![img](img/paso4-1-bef.png)
+
+**Después del Update**
+![img](img/paso4-1-aft.png)
+
+</div>
+
+2. Modificar el año de un vehículo con ID 3 a 2022: `update Vehiculos set anio=2022 where id=3;`
+
+<div align="center">
+
+**Antes del Update**
+![img](img/paso4-2-bef.png)
+
+**Después del Update**
+![img](img/paso4-2-aft.png)
+
+</div>
+
+3. Cambiar el modelo de todos los vehículos Nissan a "Micra": `update Vehiculos set modelo='Micra' where marca='Nissan';`
+
+<div align="center">
+
+**Antes del Update**
+![img](img/paso4-3-bef.png)
+
+**Después del Update**
+![img](img/paso4-3-aft.png)
+
+</div>
+
+4. Actualizar el apellido de un propietario con ID 7 a "Gomez": `update Propietarios set apellido='Gomez' where id=7;`
+
+<div align="center">
+
+**Antes del Update**
+![img](img/paso4-4-bef.png)
+
+**Después del Update**
+![img](img/paso4-4-aft.png)
+
+</div>
+
+5. Modificar la marca de un vehículo con modelo "Fiesta" a "Renault": `update Vehiculos set marca='Renault' where modelo='Fiesta';` 
+
+<div align="center">
+
+**Antes del Update**
+![img](img/paso4-5-bef.png)
+
+**Después del Update**
+![img](img/paso4-5-aft.png)
+
+</div>
+
 </div>
