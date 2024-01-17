@@ -82,15 +82,21 @@ Como resultado, tenemos la siguiente tabla tras realizar un `select * from emple
 
 ## Paso 2 - Realización de consultas
 
-Se deben realizar distintas consultas en la base de datos haciendo uso de funciones:
+Se deben realizar distintas consultas en la base de datos haciendo uso de funciones, pero antes de ello, se configura en *sqlite3*:
+
+```sql
+.mode markdown -- Imprime las tablas resultantes en el formato de tablas de markdown.
+.headers on -- Activamos las cabeceras de las tablas.
+```
 
 - Funciones UPPER y LOWER:
   - Muestra el nombre de todos los empleados en mayúsculas.
 
 ```sql
-select UPPER(nombre) as mayus_nombre from empleados;
+select upper(nombre) as mayus_nombre from empleados;
 ```
 <div align=center>
+
 | mayus_nombre |
 |--------------|
 | JUAN         |
@@ -123,6 +129,7 @@ select UPPER(nombre) as mayus_nombre from empleados;
 select abs(salario) as abs_salario from empleados;
 ```
 <div align=center>
+
 | abs_salario |
 |-------------|
 | 50000.0     |
@@ -154,6 +161,7 @@ select abs(salario) as abs_salario from empleados;
 select date() as fecha_actual;
 ```
 <div align=center>
+
 | fecha_actual |
 |--------------|
 | 2024-01-17   |
@@ -166,6 +174,7 @@ select date() as fecha_actual;
 select avg(salario) as avg_salario from empleados;
 ```
 <div align=center>
+
 | avg_salario |
 |-------------|
 | 57000.0     |
@@ -177,6 +186,7 @@ select avg(salario) as avg_salario from empleados;
 select cast('123' as integer) as str_to_int;
 ```
 <div align=center>
+
 | str_to_int |
 |------------|
 | 123        |
@@ -189,6 +199,7 @@ select cast('123' as integer) as str_to_int;
 select nombre || ' ' || departamento as nombre_dep from empleados;
 ```
 <div align=center>
+
 |        nombre_dep         |
 |---------------------------|
 | Juan Ventas               |
@@ -221,6 +232,7 @@ select nombre || ' ' || departamento as nombre_dep from empleados;
 select nombre || '-' || departamento as nombre_dep from empleados;
 ```
 <div align=center>
+
 |        nombre_dep         |
 |---------------------------|
 | Juan-Ventas               |
@@ -259,6 +271,7 @@ end as categoria_sal
 from empleados;
 ```
 <div align=center>
+
 |  nombre   | salario |     categoria_sal      |
 |-----------|---------|------------------------|
 | Juan      | 50000.0 | Salario menor a 60.000 |
@@ -289,7 +302,8 @@ from empleados;
 ```sql
 select sum(salario) as salario_total from empleados;
 ```
-<div aling=center>
+<div align=center>
+
 | salario_total |
 |---------------|
 | 1140000.0     |
@@ -302,6 +316,7 @@ select sum(salario) as salario_total from empleados;
 select round(salario, 2) as rnd_salario from empleados;
 ```
 <div align=center>
+
 | rnd_salario |
 |-------------|
 | 50000.0     |
@@ -333,6 +348,7 @@ select round(salario, 2) as rnd_salario from empleados;
 select nombre, length(nombre) as len_nombre from empleados;
 ```
 <div align=center>
+
 |  nombre   | len_nombre |
 |-----------|------------|
 | Juan      | 4          |
@@ -364,6 +380,7 @@ select nombre, length(nombre) as len_nombre from empleados;
 select count(id) as total_empleados from empleados;
 ```
 <div align=center>
+
 | total_empleados |
 |-----------------|
 | 20              |
@@ -376,6 +393,7 @@ select count(id) as total_empleados from empleados;
 select time() as hora_actual;
 ```
 <div align=center>
+
 | hora_actual |
 |-------------|
 | 08:04:06    |
@@ -388,6 +406,7 @@ select time() as hora_actual;
 select cast(salario as float) as salario_float from empleados;
 ```
 <div align=center>
+
 | salario_float |
 |---------------|
 | 50000.0       |
@@ -419,6 +438,7 @@ select cast(salario as float) as salario_float from empleados;
 select nombre, substr(nombre, 1, 3) as sub_nombre from empleados;
 ```
 <div align=center>
+
 |  nombre   | sub_nombre |
 |-----------|------------|
 | Juan      | Jua        |
