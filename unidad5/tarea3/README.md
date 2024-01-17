@@ -56,6 +56,7 @@ Otra de las formas que se puede hacer es, creando el fichero .db previamente y d
 Como resultado, tenemos la siguiente tabla tras realizar un `select * from empleados`:
 
 <div align=center>
+
 | id |  nombre   | salario |   departamento   |
 |----|-----------|---------|------------------|
 | 1  | Juan      | 50000.0 | Ventas           |
