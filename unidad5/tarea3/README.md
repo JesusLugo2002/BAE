@@ -464,4 +464,172 @@ select nombre, substr(nombre, 1, 3) as sub_nombre from empleados;
 | Beatriz   | Bea        |
 </div>
 
+- __Order By__ and __Like__.
+
+  - Empleados en el departamento de 'Ventas' con salarios superiores a 52000.
+
+```sql
+select * from empleados where departamento like "Ventas" and salario > 52000;
+```
+<div align=center>
+
+| id | nombre  | salario | departamento |
+|----|---------|---------|--------------|
+| 3  | Carlos  | 55000.0 | Ventas       |
+| 15 | Raúl    | 68000.0 | Ventas       |
+| 18 | Natalia | 54000.0 | Ventas       |
+</div>
+
+  - Empleados cuyos nombres contienen la letra 'a' y tienen salarios ordenados de manera ascendente.
+
+```sql
+select * from empleados where nombre like "%a%" order by salario;
+```
+<div align=center>
+
+| id |  nombre   | salario |   departamento   |
+|----|-----------|---------|------------------|
+| 16 | Patricia  | 47000.0 | Recursos Humanos |
+| 4  | Ana       | 48000.0 | Recursos Humanos |
+| 7  | Javier    | 48000.0 | Recursos Humanos |
+| 12 | Sofía     | 49000.0 | Ventas           |
+| 1  | Juan      | 50000.0 | Ventas           |
+| 6  | Laura     | 52000.0 | Ventas           |
+| 14 | Isabel    | 53000.0 | TI               |
+| 18 | Natalia   | 54000.0 | Ventas           |
+| 3  | Carlos    | 55000.0 | Ventas           |
+| 10 | Elena     | 55000.0 | Recursos Humanos |
+| 2  | María     | 60000.0 | TI               |
+| 13 | Andrés    | 60000.0 | Recursos Humanos |
+| 20 | Beatriz   | 63000.0 | TI               |
+| 8  | Carmen    | 65000.0 | TI               |
+| 15 | Raúl      | 68000.0 | Ventas           |
+| 17 | Alejandro | 71000.0 | TI               |
+</div>
+
+  - Empleados en el departamento 'Recursos Humanos' con salarios entre 45000 y 55000.
+
+```sql
+select * from empleados where departamento like "Recursos Humanos" and salario between 45000 and 55000;
+```
+<div align=center>
+
+| id |  nombre  | salario |   departamento   |
+|----|----------|---------|------------------|
+| 4  | Ana      | 48000.0 | Recursos Humanos |
+| 7  | Javier   | 48000.0 | Recursos Humanos |
+| 10 | Elena    | 55000.0 | Recursos Humanos |
+| 16 | Patricia | 47000.0 | Recursos Humanos |
+| 19 | Roberto  | 49000.0 | Recursos Humanos |
+</div>
+
+  - Empleados con salarios en orden descendente, limitando a los primeros 5 resultados.
+
+```sql
+select * from empleados order by salario desc limit 5;
+```
+<div align=center>
+
+| id |  nombre   | salario | departamento |
+|----|-----------|---------|--------------|
+| 11 | Diego     | 72000.0 | TI           |
+| 17 | Alejandro | 71000.0 | TI           |
+| 5  | Pedro     | 70000.0 | TI           |
+| 15 | Raúl      | 68000.0 | Ventas       |
+| 8  | Carmen    | 65000.0 | TI           |
+</div>
+
+  - Empleados cuyos nombres comienzan con 'M' o 'N' y tienen salarios superiores a 50000.
+
+```sql
+select * from empleados where nombre like "M%" or nombre like "N%" and salario > 50000;
+```
+<div align=center>
+
+| id | nombre  | salario | departamento |
+|----|---------|---------|--------------|
+| 2  | María   | 60000.0 | TI           |
+| 9  | Miguel  | 51000.0 | Ventas       |
+| 18 | Natalia | 54000.0 | Ventas       |
+</div>
+
+  - Empleados en el departamento 'TI' o 'Ventas' ordenados alfabéticamente por nombre.
+
+```sql
+select * from empleados where departamento like "TI" or departamento like "Ventas" order by nombre;
+```
+<div align=center>
+
+| id |  nombre   | salario | departamento |
+|----|-----------|---------|--------------|
+| 17 | Alejandro | 71000.0 | TI           |
+| 20 | Beatriz   | 63000.0 | TI           |
+| 3  | Carlos    | 55000.0 | Ventas       |
+| 8  | Carmen    | 65000.0 | TI           |
+| 11 | Diego     | 72000.0 | TI           |
+| 14 | Isabel    | 53000.0 | TI           |
+| 1  | Juan      | 50000.0 | Ventas       |
+| 6  | Laura     | 52000.0 | Ventas       |
+| 2  | María     | 60000.0 | TI           |
+| 9  | Miguel    | 51000.0 | Ventas       |
+| 18 | Natalia   | 54000.0 | Ventas       |
+| 5  | Pedro     | 70000.0 | TI           |
+| 15 | Raúl      | 68000.0 | Ventas       |
+| 12 | Sofía     | 49000.0 | Ventas       |
+</div>
+
+  - Empleados con salarios únicos (eliminando duplicados) en orden ascendente.
+
+```sql
+-- PREGUNTAR SOBRE DISTINCT Y REMOVER VALORES ÚNICOS
+```
+
+  - Empleados cuyos nombres terminan con 'o' o 'a' y están en el departamento 'Ventas'.
+
+```sql
+select * from empleados where (nombre like "%o" or nombre like "%a") and departamento like "Ventas";
+```
+<div align=center>
+
+| id | nombre  | salario | departamento |
+|----|---------|---------|--------------|
+| 6  | Laura   | 52000.0 | Ventas       |
+| 12 | Sofía   | 49000.0 | Ventas       |
+| 18 | Natalia | 54000.0 | Ventas       |
+</div>
+
+  - Empleados con salarios fuera del rango de 55000 a 70000, ordenados por departamento.
+
+```sql
+select * from empleados where salario not between 55000 and 70000 order by departamento;
+```
+<div align=center>
+
+| id |  nombre   | salario |   departamento   |
+|----|-----------|---------|------------------|
+| 4  | Ana       | 48000.0 | Recursos Humanos |
+| 7  | Javier    | 48000.0 | Recursos Humanos |
+| 16 | Patricia  | 47000.0 | Recursos Humanos |
+| 19 | Roberto   | 49000.0 | Recursos Humanos |
+| 11 | Diego     | 72000.0 | TI               |
+| 14 | Isabel    | 53000.0 | TI               |
+| 17 | Alejandro | 71000.0 | TI               |
+| 1  | Juan      | 50000.0 | Ventas           |
+| 6  | Laura     | 52000.0 | Ventas           |
+| 9  | Miguel    | 51000.0 | Ventas           |
+| 12 | Sofía     | 49000.0 | Ventas           |
+| 18 | Natalia   | 54000.0 | Ventas           |
+</div>
+
+  - Empleados en el departamento 'Recursos Humanos' con nombres que no contienen la letra 'e'.
+
+```sql
+select * from empleados where departamento like "Recursos Humanos" and nombre not like "%e%" and nombre not like "%é%";
+```
+<div align=center>
+
+| id |  nombre  | salario |   departamento   |
+|----|----------|---------|------------------|
+| 4  | Ana      | 48000.0 | Recursos Humanos |
+| 16 | Patricia | 47000.0 | Recursos Humanos |
 </div>
