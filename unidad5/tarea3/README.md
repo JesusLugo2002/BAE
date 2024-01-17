@@ -581,8 +581,30 @@ select * from empleados where departamento like "TI" or departamento like "Venta
   - Empleados con salarios únicos (eliminando duplicados) en orden ascendente.
 
 ```sql
--- PREGUNTAR SOBRE DISTINCT Y REMOVER VALORES ÚNICOS
+select distinct id, nombre, salario from empleados group by salario order by salario;
 ```
+
+<div align=center>
+
+| id |  nombre   | salario |
+|----|-----------|---------|
+| 16 | Patricia  | 47000.0 |
+| 4  | Ana       | 48000.0 |
+| 12 | Sofía     | 49000.0 |
+| 1  | Juan      | 50000.0 |
+| 9  | Miguel    | 51000.0 |
+| 6  | Laura     | 52000.0 |
+| 14 | Isabel    | 53000.0 |
+| 18 | Natalia   | 54000.0 |
+| 3  | Carlos    | 55000.0 |
+| 2  | María     | 60000.0 |
+| 20 | Beatriz   | 63000.0 |
+| 8  | Carmen    | 65000.0 |
+| 15 | Raúl      | 68000.0 |
+| 5  | Pedro     | 70000.0 |
+| 17 | Alejandro | 71000.0 |
+| 11 | Diego     | 72000.0 |
+</div>
 
   - Empleados cuyos nombres terminan con 'o' o 'a' y están en el departamento 'Ventas'.
 
