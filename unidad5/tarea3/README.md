@@ -378,13 +378,15 @@ select nombre, length(nombre) as len_nombre from empleados;
   - Cuenta el número total de empleados en cada departamento.
 
 ```sql
-select count(id) as total_empleados from empleados;
+select count(id) as empleados, departamento from empleados group by departamento;
 ```
 <div align=center>
 
-| total_empleados |
-|-----------------|
-| 20              |
+| empleados |   departamento   |
+|-----------|------------------|
+| 6         | Recursos Humanos |
+| 7         | TI               |
+| 7         | Ventas           |
 </div>
 
 - Funciones de Fecha y Hora (CURRENT_TIME):
