@@ -120,11 +120,11 @@ Como resultado, tras ejecutar un `.tables`, nos damos cuenta que existen dos tab
 
 ### Diagrama ER
 
-![diagrama-er](/img/diagrama-er.drawio.png)
+![diagrama-er](img/diagrama-er.drawio.png)
 
 ### Diagrama MR
 
-![diagrama-mr](/img/diagrama-mr.drawio.png)
+![diagrama-mr](img/diagrama-mr.drawio.png)
 
 </div>
 
