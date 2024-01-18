@@ -1,6 +1,5 @@
 # Tarea-trabajo con funciones
 
-
 <div align=center>
     
 ![gif](https://www.gifmaniacos.es/wp-content/uploads/2019/04/peces-gif-gifmaniacos.es-15.gif)
@@ -55,7 +54,6 @@ Otra de las formas que se puede hacer es, creando el fichero .db previamente y d
 
 Como resultado, tenemos la siguiente tabla tras realizar un `select * from empleados`:
 
-<div align=center>
 
 | id |  nombre   | salario |   departamento   |
 |----|-----------|---------|------------------|
@@ -79,7 +77,6 @@ Como resultado, tenemos la siguiente tabla tras realizar un `select * from emple
 | 18 | Natalia   | 54000.0 | Ventas           |
 | 19 | Roberto   | 49000.0 | Recursos Humanos |
 | 20 | Beatriz   | 63000.0 | TI               |
-</div>
 
 ## Paso 2 - Realización de consultas
 
@@ -96,7 +93,6 @@ Se deben realizar distintas consultas en la base de datos haciendo uso de funcio
 ```sql
 select upper(nombre) as mayus_nombre from empleados;
 ```
-<div align=center>
 
 | mayus_nombre |
 |--------------|
@@ -120,7 +116,6 @@ select upper(nombre) as mayus_nombre from empleados;
 | NATALIA      |
 | ROBERTO      |
 | BEATRIZ      |
-</div>
 
 - Funciones Numéricas:
   - Calcula el valor absoluto del salario de todos los empleados.
@@ -129,7 +124,6 @@ select upper(nombre) as mayus_nombre from empleados;
 -- En este ejercicio no se notará diferencia, pues en sus valores base no existe ninguno que sea negativo.
 select abs(salario) as abs_salario from empleados;
 ```
-<div align=center>
 
 | abs_salario |
 |-------------|
@@ -153,7 +147,6 @@ select abs(salario) as abs_salario from empleados;
 | 54000.0     |
 | 49000.0     |
 | 63000.0     |
-</div>
 
 - Funciones de Fecha y Hora:
   - Muestra la fecha actual.
@@ -161,12 +154,10 @@ select abs(salario) as abs_salario from empleados;
 ```sql
 select date() as fecha_actual;
 ```
-<div align=center>
 
 | fecha_actual |
 |--------------|
 | 2024-01-17   |
-</div>
 
 - Funciones de Agregación:
   - Calcula el promedio de salarios de todos los empleados.
@@ -174,24 +165,20 @@ select date() as fecha_actual;
 ```sql
 select avg(salario) as avg_salario from empleados;
 ```
-<div align=center>
 
 | avg_salario |
 |-------------|
 | 57000.0     |
-</div>
 
   - Convierte la cadena '123' a un valor entero.
 
 ```sql
 select cast('123' as integer) as str_to_int;
 ```
-<div align=center>
 
 | str_to_int |
 |------------|
 | 123        |
-</div>
 
 - Funciones de Manipulación de Cadenas:
   - Concatena el nombre y el departamento de cada empleado.
@@ -199,7 +186,6 @@ select cast('123' as integer) as str_to_int;
 ```sql
 select nombre || ' ' || departamento as nombre_dep from empleados;
 ```
-<div align=center>
 
 |        nombre_dep         |
 |---------------------------|
@@ -223,7 +209,6 @@ select nombre || ' ' || departamento as nombre_dep from empleados;
 | Natalia Ventas            |
 | Roberto Recursos Humanos  |
 | Beatriz TI                |
-</div>
 
 - Funciones de Manipulación de Cadenas (CONCAT_WS):
   - Concatena el nombre y el departamento de cada empleado con un guion como separador.
@@ -232,7 +217,6 @@ select nombre || ' ' || departamento as nombre_dep from empleados;
 -- Ya que no existe la función CONCAT_WS en SQLite, se sigue usando el método de ||
 select nombre || '-' || departamento as nombre_dep from empleados;
 ```
-<div align=center>
 
 |        nombre_dep         |
 |---------------------------|
@@ -256,7 +240,6 @@ select nombre || '-' || departamento as nombre_dep from empleados;
 | Natalia-Ventas            |
 | Roberto-Recursos Humanos  |
 | Beatriz-TI                |
-</div>
 
 - Funciones de Control de Flujo (CASE):
   - Categoriza a los empleados según sus salarios.
@@ -271,7 +254,6 @@ case
 end as categoria_sal
 from empleados;
 ```
-<div align=center>
 
 |  nombre   | salario |     categoria_sal      |
 |-----------|---------|------------------------|
@@ -295,7 +277,6 @@ from empleados;
 | Natalia   | 54000.0 | Salario menor a 60.000 |
 | Roberto   | 49000.0 | Salario menor a 60.000 |
 | Beatriz   | 63000.0 | Salario mayor a 60.000 |
-</div>
 
 - Funciones de Agregación (SUM):
   - Calcula la suma total de salarios de todos los empleados.
@@ -303,12 +284,10 @@ from empleados;
 ```sql
 select sum(salario) as salario_total from empleados;
 ```
-<div align=center>
 
 | salario_total |
 |---------------|
 | 1140000.0     |
-</div>
 
 - Funciones Numéricas (ROUND):
   - Redondea el salario de todos los empleados a dos decimales.
@@ -316,7 +295,6 @@ select sum(salario) as salario_total from empleados;
 ```sql
 select round(salario, 2) as rnd_salario from empleados;
 ```
-<div align=center>
 
 | rnd_salario |
 |-------------|
@@ -340,7 +318,6 @@ select round(salario, 2) as rnd_salario from empleados;
 | 54000.0     |
 | 49000.0     |
 | 63000.0     |
-</div>
 
 - Funciones de Manipulación de Cadenas (LENGTH):
   - Muestra la longitud de cada nombre de empleado.
@@ -348,7 +325,6 @@ select round(salario, 2) as rnd_salario from empleados;
 ```sql
 select nombre, length(nombre) as len_nombre from empleados;
 ```
-<div align=center>
 
 |  nombre   | len_nombre |
 |-----------|------------|
@@ -372,7 +348,6 @@ select nombre, length(nombre) as len_nombre from empleados;
 | Natalia   | 7          |
 | Roberto   | 7          |
 | Beatriz   | 7          |
-</div>
 
 - Funciones de Agregación (COUNT):
   - Cuenta el número total de empleados en cada departamento.
@@ -380,14 +355,12 @@ select nombre, length(nombre) as len_nombre from empleados;
 ```sql
 select count(id) as empleados, departamento from empleados group by departamento;
 ```
-<div align=center>
 
 | empleados |   departamento   |
 |-----------|------------------|
 | 6         | Recursos Humanos |
 | 7         | TI               |
 | 7         | Ventas           |
-</div>
 
 - Funciones de Fecha y Hora (CURRENT_TIME):
   - Muestra la hora actual.
@@ -395,12 +368,10 @@ select count(id) as empleados, departamento from empleados group by departamento
 ```sql
 select time() as hora_actual;
 ```
-<div align=center>
 
 | hora_actual |
 |-------------|
 | 08:04:06    |
-</div>
 
 - Funciones de Conversión (CAST):
   - Convierte el salario a un valor de punto flotante.
@@ -408,7 +379,6 @@ select time() as hora_actual;
 ```sql
 select cast(salario as float) as salario_float from empleados;
 ```
-<div align=center>
 
 | salario_float |
 |---------------|
@@ -432,7 +402,6 @@ select cast(salario as float) as salario_float from empleados;
 | 54000.0       |
 | 49000.0       |
 | 63000.0       |
-</div>
 
 - Funciones de Manipulación de Cadenas (SUBSTR):
   - Muestra los primeros tres caracteres de cada nombre de empleado.
@@ -440,7 +409,6 @@ select cast(salario as float) as salario_float from empleados;
 ```sql
 select nombre, substr(nombre, 1, 3) as sub_nombre from empleados;
 ```
-<div align=center>
 
 |  nombre   | sub_nombre |
 |-----------|------------|
@@ -464,7 +432,6 @@ select nombre, substr(nombre, 1, 3) as sub_nombre from empleados;
 | Natalia   | Nat        |
 | Roberto   | Rob        |
 | Beatriz   | Bea        |
-</div>
 
 - __Order By__ and __Like__.
 
@@ -473,21 +440,18 @@ select nombre, substr(nombre, 1, 3) as sub_nombre from empleados;
 ```sql
 select * from empleados where departamento like "Ventas" and salario > 52000;
 ```
-<div align=center>
 
 | id | nombre  | salario | departamento |
 |----|---------|---------|--------------|
 | 3  | Carlos  | 55000.0 | Ventas       |
 | 15 | Raúl    | 68000.0 | Ventas       |
 | 18 | Natalia | 54000.0 | Ventas       |
-</div>
 
   - Empleados cuyos nombres contienen la letra 'a' y tienen salarios ordenados de manera ascendente.
 
 ```sql
 select * from empleados where nombre like "%a%" order by salario;
 ```
-<div align=center>
 
 | id |  nombre   | salario |   departamento   |
 |----|-----------|---------|------------------|
@@ -507,14 +471,12 @@ select * from empleados where nombre like "%a%" order by salario;
 | 8  | Carmen    | 65000.0 | TI               |
 | 15 | Raúl      | 68000.0 | Ventas           |
 | 17 | Alejandro | 71000.0 | TI               |
-</div>
 
   - Empleados en el departamento 'Recursos Humanos' con salarios entre 45000 y 55000.
 
 ```sql
 select * from empleados where departamento like "Recursos Humanos" and salario between 45000 and 55000;
 ```
-<div align=center>
 
 | id |  nombre  | salario |   departamento   |
 |----|----------|---------|------------------|
@@ -523,14 +485,12 @@ select * from empleados where departamento like "Recursos Humanos" and salario b
 | 10 | Elena    | 55000.0 | Recursos Humanos |
 | 16 | Patricia | 47000.0 | Recursos Humanos |
 | 19 | Roberto  | 49000.0 | Recursos Humanos |
-</div>
 
   - Empleados con salarios en orden descendente, limitando a los primeros 5 resultados.
 
 ```sql
 select * from empleados order by salario desc limit 5;
 ```
-<div align=center>
 
 | id |  nombre   | salario | departamento |
 |----|-----------|---------|--------------|
@@ -539,28 +499,24 @@ select * from empleados order by salario desc limit 5;
 | 5  | Pedro     | 70000.0 | TI           |
 | 15 | Raúl      | 68000.0 | Ventas       |
 | 8  | Carmen    | 65000.0 | TI           |
-</div>
 
   - Empleados cuyos nombres comienzan con 'M' o 'N' y tienen salarios superiores a 50000.
 
 ```sql
 select * from empleados where nombre like "M%" or nombre like "N%" and salario > 50000;
 ```
-<div align=center>
 
 | id | nombre  | salario | departamento |
 |----|---------|---------|--------------|
 | 2  | María   | 60000.0 | TI           |
 | 9  | Miguel  | 51000.0 | Ventas       |
 | 18 | Natalia | 54000.0 | Ventas       |
-</div>
 
   - Empleados en el departamento 'TI' o 'Ventas' ordenados alfabéticamente por nombre.
 
 ```sql
 select * from empleados where departamento like "TI" or departamento like "Ventas" order by nombre;
 ```
-<div align=center>
 
 | id |  nombre   | salario | departamento |
 |----|-----------|---------|--------------|
@@ -578,7 +534,6 @@ select * from empleados where departamento like "TI" or departamento like "Venta
 | 5  | Pedro     | 70000.0 | TI           |
 | 15 | Raúl      | 68000.0 | Ventas       |
 | 12 | Sofía     | 49000.0 | Ventas       |
-</div>
 
   - Empleados con salarios únicos (eliminando duplicados) en orden ascendente.
 
@@ -586,7 +541,6 @@ select * from empleados where departamento like "TI" or departamento like "Venta
 select distinct id, nombre, salario from empleados group by salario order by salario;
 ```
 
-<div align=center>
 
 | id |  nombre   | salario |
 |----|-----------|---------|
@@ -606,28 +560,24 @@ select distinct id, nombre, salario from empleados group by salario order by sal
 | 5  | Pedro     | 70000.0 |
 | 17 | Alejandro | 71000.0 |
 | 11 | Diego     | 72000.0 |
-</div>
 
   - Empleados cuyos nombres terminan con 'o' o 'a' y están en el departamento 'Ventas'.
 
 ```sql
 select * from empleados where (nombre like "%o" or nombre like "%a") and departamento like "Ventas";
 ```
-<div align=center>
 
 | id | nombre  | salario | departamento |
 |----|---------|---------|--------------|
 | 6  | Laura   | 52000.0 | Ventas       |
 | 12 | Sofía   | 49000.0 | Ventas       |
 | 18 | Natalia | 54000.0 | Ventas       |
-</div>
 
   - Empleados con salarios fuera del rango de 55000 a 70000, ordenados por departamento.
 
 ```sql
 select * from empleados where salario not between 55000 and 70000 order by departamento;
 ```
-<div align=center>
 
 | id |  nombre   | salario |   departamento   |
 |----|-----------|---------|------------------|
@@ -643,17 +593,16 @@ select * from empleados where salario not between 55000 and 70000 order by depar
 | 9  | Miguel    | 51000.0 | Ventas           |
 | 12 | Sofía     | 49000.0 | Ventas           |
 | 18 | Natalia   | 54000.0 | Ventas           |
-</div>
 
   - Empleados en el departamento 'Recursos Humanos' con nombres que no contienen la letra 'e'.
 
 ```sql
 select * from empleados where departamento like "Recursos Humanos" and nombre not like "%e%" and nombre not like "%é%";
 ```
-<div align=center>
 
 | id |  nombre  | salario |   departamento   |
 |----|----------|---------|------------------|
 | 4  | Ana      | 48000.0 | Recursos Humanos |
 | 16 | Patricia | 47000.0 | Recursos Humanos |
+
 </div>
