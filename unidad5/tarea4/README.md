@@ -116,6 +116,21 @@ Como resultado, tras ejecutar un `.tables`, nos damos cuenta que existen dos tab
 
 ## Paso 2 - Diagramas
 
+<div align=center> 
+
+### Diagrama ER
+
+![diagrama-er](/img/diagrama-er.drawio.png)
+
+### Diagrama MR
+
+![diagrama-mr](/img/diagrama-mr.drawio.png)
+
+</div>
+
+### ¿La BBDD está normalizada hasta la 3era forma normal?
+Sí, pues además de cumplir la primera y la segunda forma normal (los atributos son elementos atómicos y hay dependencia funcional), cumple la tercera forma normal, pues no existen en las tablas alguna dependencia transitiva.
+
 ## Paso 3 - Consultas 
 
 Se deben realizar las siguientes consultas y mostrar el resultado de las mismas:
