@@ -10,6 +10,17 @@
 
 <div align=justify>
 
+## Índice
+
+- [Paso 1. Creación de la base de datos](#paso-1---creación-de-la-bases-de-datos)
+    - [Tabla *Producto*](#tabla-productos)
+    - [Tabla *Ventas*](#tabla-ventas)
+- [Paso 2. Diagramas](#paso-2---diagramas)
+    - [Diagrama entidad-relación](#diagrama-er)
+    - [Diagrama modelo-relacional](#diagrama-mr)
+    - [¿La BBDD está normalizada?](#¿la-bbdd-está-normalizada-hasta-la-3era-forma-normal)
+- [Paso 3. Ejercicios de consultas](#paso-3---consultas)
+
 ## Paso 1 - Creación de la bases de datos
 
 Para esta actividad, ya se nos dispone el siguiente fichero `supermercado-dump.sql` como base para crear la base de datos:
@@ -582,4 +593,3 @@ select * from productos where precio > (select max(precio) from productos);
 > **No se imprime tabla pues no se encuentra un producto con un precio mayor al precio máximo.**
 
 </div>
-
