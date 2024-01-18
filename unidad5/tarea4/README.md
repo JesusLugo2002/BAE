@@ -18,7 +18,7 @@
 - [Paso 2. Diagramas](#paso-2---diagramas)
     - [Diagrama entidad-relación](#diagrama-er)
     - [Diagrama modelo-relacional](#diagrama-mr)
-    - [¿La BBDD está normalizada?](#¿la-bbdd-está-normalizada-hasta-la-3era-forma-normal)
+    - [¿La BBDD está normalizada?](#¿la-bbdd-está-normalizada-hasta-la-3era-forma-normal?)
 - [Paso 3. Ejercicios de consultas](#paso-3---consultas)
 
 ## Paso 1 - Creación de la bases de datos
