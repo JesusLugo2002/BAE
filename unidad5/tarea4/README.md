@@ -473,16 +473,98 @@ select categoria, count(categoria) as cantidad_productos from productos group by
 - Listar los productos que tienen un precio igual a la media de precios.
 
 ```sql
-select id, nombre, precio from Productos where precio = avg(precio);
+select * from productos where precio = (select avg(precio) from productos;)
 ```
+> **No se imprime ninguna tabla pues no se encuentran productos con un precio igual a la media de precios.**
 
 - Calcular el precio total de los productos vendidos en cada fecha.
+
+```sql
+select sum(p.precio*v.cantidad) as precio_total, v.fecha from productos as p, ventas as v where p.id = v.id_producto group by v.fecha;
+```
+| precio_total |   fecha    |
+|--------------|------------|
+| 29.4         | 2024-01-17 |
+| 25.8         | 2024-01-18 |
+| 26.9         | 2024-01-19 |
+| 7.2          | 2024-01-20 |
+
 - Mostrar los productos con un nombre que termina con la letra 'o'.
+
+```sql
+select * from productos where nombre like "%o";
+```
+| id |     nombre      | categoria | precio |
+|----|-----------------|-----------|--------|
+| 5  | Pollo           | Carnes    | 5.5    |
+| 9  | Queso           | Lácteos   | 4.0    |
+| 11 | Papel Higiénico | Hogar     | 1.5    |
+| 18 | Jabón de Baño   | Higiene   | 1.2    |
+
 - Encontrar los productos que han sido vendidos en más de una fecha.
+
+```sql
+select p.id, p.nombre, v.fecha from productos as p, ventas as v where p.id = v.id_producto group by p.id having count(distinct fecha) > 1;
+```
+> **No se imprime tabla porque no hay producto que haya sido vendido en más de una fecha.**
+
 - Listar los productos cuya categoría comienza con la letra 'L'.
+
+```sql
+select * from productos where categoria like "L%";
+```
+| id |   nombre   | categoria | precio |
+|----|------------|-----------|--------|
+| 2  | Leche      | Lácteos   | 1.8    |
+| 6  | Huevos     | Lácteos   | 1.0    |
+| 7  | Yogurt     | Lácteos   | 2.0    |
+| 9  | Queso      | Lácteos   | 4.0    |
+| 13 | Detergente | Limpieza  | 2.8    |
+
 - Calcular el total de ventas para cada producto en la fecha '2024-01-17'.
+
+```sql
+select p.id, p.nombre, p.precio*v.cantidad as total_ventas, v.fecha from productos as p, ventas as v where p.id = v.id_producto and fecha like "2024-01-17";
+```
+| id |  nombre  | total_ventas |   fecha    |
+|----|----------|--------------|------------|
+| 1  | Arroz    | 12.5         | 2024-01-17 |
+| 2  | Leche    | 5.4          | 2024-01-17 |
+| 4  | Manzanas | 6.0          | 2024-01-17 |
+| 5  | Pollo    | 5.5          | 2024-01-17 |
+
 - Mostrar los productos cuyo nombre tiene al menos 5 caracteres.
+
+```sql
+select * from productos where length(nombre) >= 5;
+```
+| id |       nombre       | categoria | precio |
+|----|--------------------|-----------|--------|
+| 1  | Arroz              | Alimentos | 2.5    |
+| 2  | Leche              | Lácteos   | 1.8    |
+| 4  | Manzanas           | Frutas    | 3.0    |
+| 5  | Pollo              | Carnes    | 5.5    |
+| 6  | Huevos             | Lácteos   | 1.0    |
+| 7  | Yogurt             | Lácteos   | 2.0    |
+| 8  | Tomates            | Verduras  | 2.2    |
+| 9  | Queso              | Lácteos   | 4.0    |
+| 10 | Cereal             | Desayuno  | 3.5    |
+| 11 | Papel Higiénico    | Hogar     | 1.5    |
+| 12 | Cepillo de Dientes | Higiene   | 2.0    |
+| 13 | Detergente         | Limpieza  | 2.8    |
+| 14 | Galletas           | Snacks    | 1.7    |
+| 15 | Aceite de Oliva    | Cocina    | 4.5    |
+| 17 | Sopa enlatada      | Conservas | 2.3    |
+| 18 | Jabón de Baño      | Higiene   | 1.2    |
+| 19 | Botellas de Agua   | Bebidas   | 1.0    |
+| 20 | Cerveza            | Bebidas   | 3.8    |
+
 - Encontrar los productos que tienen un precio superior al precio máximo en la tabla "__productos__".
+
+```sql
+select * from productos where precio > (select max(precio) from productos);
+```
+> **No se imprime tabla pues no se encuentra un producto con un precio mayor al precio máximo.**
 
 </div>
 
