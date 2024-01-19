@@ -498,7 +498,7 @@ select categoria, count(categoria) as cantidad_productos from productos group by
 - Listar los productos que tienen un precio igual a la media de precios.
 
 ```sql
-select * from productos where precio = (select avg(precio) from productos;)
+select * from productos where precio = (select avg(precio) from productos);
 ```
 > **No se imprime ninguna tabla pues no se encuentran productos con un precio igual a la media de precios.**
 
