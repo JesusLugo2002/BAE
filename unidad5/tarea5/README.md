@@ -11,6 +11,7 @@
 ## Consultas
 
 A continuación las consultas realizadas, junto a su respectiva salida, utilizando expresiones regulares.
+__NOTA: En caso de que se necesite el formato en .sql, dejo [en este fichero](./consultas-bb-expreg.sql) el archivo .sql con las respuestas en comentarios.__
 
 1. Selección de libros cuyo título comienza con "H".
 ```sql
