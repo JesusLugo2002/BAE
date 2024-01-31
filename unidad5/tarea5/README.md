@@ -1,68 +1,66 @@
--- Selección de libros cuyo título comienza con "H".
+# Ejercicios de consultas con regexp
 
+<div align=center>
+    
+![gif](https://www.gifmaniacos.es/wp-content/uploads/2019/04/peces-gif-gifmaniacos.es-15.gif)
+
+*Pez de la buena suerte.*
+
+</div>
+
+## Consultas
+
+A continuación las consultas realizadas, junto a su respectiva salida, utilizando expresiones regulares.
+
+1. Selección de libros cuyo título comienza con "H".
+```sql
 select * from libro where titulo regexp '^H';
-
-/**
+```
 No se retorna tabla pues no existen libros que empiecen con 'H'.
-**/
 
--- Libros escritos por autores cuyos nombres terminan con "ing".
+2. Libros escritos por autores cuyos nombres terminan con "ing".
 
+```sql
 select l.* from libro as l, autor as a where l.autor_id = a.id and a.nombre regexp 'ing$';
-
-/**
+```
 No retorna tabla porque no se cumplen las condiciones.
-**/
 
--- Libros con títulos que contienen la palabra "and" en cualquier posición.
-
+3. Libros con títulos que contienen la palabra "and" en cualquier posición.
+```sql
 select * from libro where titulo regexp 'and';
-
-/**
-+--------+----------------------------------+----------+-------------------------+--------+
+```
 | codigo |              titulo              | autor_id |        editorial        | precio |
-+--------+----------------------------------+----------+-------------------------+--------+
+|--------|----------------------------------|----------|-------------------------|--------|
 | 15     | The Old Man and the Sea          | 17       | Charles Scribner's Sons | 18.95  |
 | 20     | Alice's Adventures in Wonderland | 22       | Macmillan               | 11.5   |
 | 28     | War and Peace                    | 26       | The Russian Messenger   | 33.25  |
 | 29     | Crime and Punishment             | 30       | The Russian Messenger   | 19.99  |
-+--------+----------------------------------+----------+-------------------------+--------+
-**/
 
--- Libros cuyo título comienza con una vocal.
 
+4. Libros cuyo título comienza con una vocal.
+```sql
 select * from libro where titulo regexp '^[aeiouAEIOU]';
-
-/**
-+--------+----------------------------------+----------+-----------------------+--------+
+```
 | codigo |              titulo              | autor_id |       editorial       | precio |
-+--------+----------------------------------+----------+-----------------------+--------+
+|--------|----------------------------------|----------|-----------------------|--------|
 | 4      | One Hundred Years of Solitude    | 9        | Harper & Row          | 22.5   |
 | 20     | Alice's Adventures in Wonderland | 22       | Macmillan             | 11.5   |
 | 24     | Anna Karenina                    | 26       | The Russian Messenger | 23.99  |
-+--------+----------------------------------+----------+-----------------------+--------+
-**/
 
--- Libros cuyo autor tiene al menos una vocal repetida.
-
+5. Libros cuyo autor tiene al menos una vocal repetida.
+```sql
 select l.*, a.nombre as nombre_autor from libro as l, autor as a where l.autor_id = a.id and a.nombre regexp '[aeiouAEIOU]{2}';
-
-/**
-+--------+-----------------+----------+-----------------+--------+---------------+
+```
 | codigo |     titulo      | autor_id |    editorial    | precio | nombre_autor  |
-+--------+-----------------+----------+-----------------+--------+---------------+
+|--------|-----------------|----------|-----------------|--------|---------------|
 | 5      | Brave New World | 3        | Chatto & Windus | 17.99  | George Orwell |
-+--------+-----------------+----------+-----------------+--------+---------------+
-**/
 
--- Libros con precios que tienen dos dígitos decimales exactos.
-
+6. Libros con precios que tienen dos dígitos decimales exactos.
+```sql
 select * from libro where precio regexp '\.\d{2}$';
-
-/**
-+--------+-----------------------------------+----------+---------------------------------------------+--------+
+```
 | codigo |              titulo               | autor_id |                  editorial                  | precio |
-+--------+-----------------------------------+----------+---------------------------------------------+--------+
+|--------|-----------------------------------|----------|---------------------------------------------|--------|
 | 1      | The Great Gatsby                  | 6        | Charles Scribner's Sons                     | 20.99  |
 | 2      | To Kill a Mockingbird             | 7        | J.B. Lippincott & Co.                       | 15.95  |
 | 3      | The Catcher in the Rye            | 8        | Little, Brown and Company                   | 18.75  |
@@ -85,17 +83,13 @@ select * from libro where precio regexp '\.\d{2}$';
 | 26     | The Jungle Book                   | 28       | Macmillan Publishers                        | 14.99  |
 | 28     | War and Peace                     | 26       | The Russian Messenger                       | 33.25  |
 | 29     | Crime and Punishment              | 30       | The Russian Messenger                       | 19.99  |
-+--------+-----------------------------------+----------+---------------------------------------------+--------+
-**/
 
--- Libros cuyos títulos tienen al menos tres palabras.
-
+7. Libros cuyos títulos tienen al menos tres palabras.
+```sql
 select * from libro where titulo regexp '\w+\s\w+\s\w+';
-
-/**
-+--------+-----------------------------------+----------+---------------------------+--------+
+```
 | codigo |              titulo               | autor_id |         editorial         | precio |
-+--------+-----------------------------------+----------+---------------------------+--------+
+|--------|-----------------------------------|----------|---------------------------|--------|
 | 1      | The Great Gatsby                  | 6        | Charles Scribner's Sons   | 20.99  |
 | 2      | To Kill a Mockingbird             | 7        | J.B. Lippincott & Co.     | 15.95  |
 | 3      | The Catcher in the Rye            | 8        | Little, Brown and Company | 18.75  |
@@ -114,61 +108,46 @@ select * from libro where titulo regexp '\w+\s\w+\s\w+';
 | 27     | The Wind in the Willows           | 29       | Methuen & Co.             | 17.5   |
 | 28     | War and Peace                     | 26       | The Russian Messenger     | 33.25  |
 | 29     | Crime and Punishment              | 30       | The Russian Messenger     | 19.99  |
-+--------+-----------------------------------+----------+---------------------------+--------+
-**/
 
--- Obtener todos los autores cuyo nombre empieza con la letra "A":
 
+8. Obtener todos los autores cuyo nombre empieza con la letra "A":
+```sql
 select * from autor where nombre regexp '^[aA]';
-
-/**
-+----+-----------------+
+```
 | id |     nombre      |
-+----+-----------------+
+|----|-----------------|
 | 5  | Agatha Christie |
-+----+-----------------+
-**/
 
--- Seleccionar los libros cuyo título contiene la palabra "SQL":
-
+9. Seleccionar los libros cuyo título contiene la palabra "SQL":
+```sql
 select * from libro where titulo regexp 'SQL';
-
-/**
+```
 Se retorna vacío pues no existe ningún libro cuyo título contenga la palabra 'SQL'.
-**/
 
--- Obtener todos los autores cuyo nombre termina con "ez":
-
+10. Obtener todos los autores cuyo nombre termina con "ez":
+```sql
 select * from autor where nombre regexp 'ez$';
-
-/**
+```
 Se retorna vacío pues no existe ningún autor cuyo nombre termine en 'ez'.
-**/
 
--- Obtener todos los autores cuyo nombre tiene al menos 5 caracteres:
-
+11. Obtener todos los autores cuyo nombre tiene al menos 5 caracteres:
+```sql
 select * from autor where nombre regexp '.....';
-
-/**
-+----+-----------------+
+```
 | id |     nombre      |
-+----+-----------------+
+|----|-----------------|
 | 1  | J.K. Rowling    |
 | 2  | Stephen King    |
 | 3  | George Orwell   |
 | 4  | Jane Austen     |
 | 5  | Agatha Christie |
-+----+-----------------+
-**/
 
--- Seleccionar los libros cuya editorial es diferente de "EditorialX":
-
+12. Seleccionar los libros cuya editorial es diferente de "EditorialX":
+```sql
 select * from libro where editorial not regexp 'EditorialX';
-
-/**
-+--------+-----------------------------------+----------+---------------------------------------------+--------+
+```
 | codigo |              titulo               | autor_id |                  editorial                  | precio |
-+--------+-----------------------------------+----------+---------------------------------------------+--------+
+|--------|-----------------------------------|----------|---------------------------------------------|--------|
 | 1      | The Great Gatsby                  | 6        | Charles Scribner's Sons                     | 20.99  |
 | 2      | To Kill a Mockingbird             | 7        | J.B. Lippincott & Co.                       | 15.95  |
 | 3      | The Catcher in the Rye            | 8        | Little, Brown and Company                   | 18.75  |
@@ -198,34 +177,27 @@ select * from libro where editorial not regexp 'EditorialX';
 | 27     | The Wind in the Willows           | 29       | Methuen & Co.                               | 17.5   |
 | 28     | War and Peace                     | 26       | The Russian Messenger                       | 33.25  |
 | 29     | Crime and Punishment              | 30       | The Russian Messenger                       | 19.99  |
-+--------+-----------------------------------+----------+---------------------------------------------+--------+
-**/
 
 
--- Obtener todos los autores cuyo nombre contiene al menos una vocal:
-
+13. Obtener todos los autores cuyo nombre contiene al menos una vocal:
+```sql
 select * from autor where nombre regexp '[aeiouAEIOU]+';
-
-/**
-+----+-----------------+
+```
 | id |     nombre      |
-+----+-----------------+
+|----|-----------------|
 | 1  | J.K. Rowling    |
 | 2  | Stephen King    |
 | 3  | George Orwell   |
 | 4  | Jane Austen     |
 | 5  | Agatha Christie |
-+----+-----------------+
-**/
 
--- Seleccionar los libros cuyo título comienza con una letra mayúscula:
 
+14. Seleccionar los libros cuyo título comienza con una letra mayúscula:
+```sql
 select * from libro where titulo regexp '^[A-Z]';
-
-/**
-+--------+-----------------------------------+----------+---------------------------------------------+--------+
+```
 | codigo |              titulo               | autor_id |                  editorial                  | precio |
-+--------+-----------------------------------+----------+---------------------------------------------+--------+
+|--------|-----------------------------------|----------|---------------------------------------------|--------|
 | 1      | The Great Gatsby                  | 6        | Charles Scribner's Sons                     | 20.99  |
 | 2      | To Kill a Mockingbird             | 7        | J.B. Lippincott & Co.                       | 15.95  |
 | 3      | The Catcher in the Rye            | 8        | Little, Brown and Company                   | 18.75  |
@@ -255,78 +227,60 @@ select * from libro where titulo regexp '^[A-Z]';
 | 27     | The Wind in the Willows           | 29       | Methuen & Co.                               | 17.5   |
 | 28     | War and Peace                     | 26       | The Russian Messenger                       | 33.25  |
 | 29     | Crime and Punishment              | 30       | The Russian Messenger                       | 19.99  |
-+--------+-----------------------------------+----------+---------------------------------------------+--------+
-**/
 
--- Obtener todos los autores cuyo nombre no contiene la letra "r":
-
+15. Obtener todos los autores cuyo nombre no contiene la letra "r":
+```sql
 select * from autor where nombre not regexp '[rR]';
-
-/**
-+----+--------------+
+```
 | id |    nombre    |
-+----+--------------+
+|----|--------------|
 | 2  | Stephen King |
 | 4  | Jane Austen  |
-+----+--------------+
-**/
 
--- Seleccionar los libros cuya editorial empieza con la letra "P":
 
+16. Seleccionar los libros cuya editorial empieza con la letra "P":
+```sql
 select * from libro where editorial regexp '^[Pp]';
-
-/**
-+--------+---------------------------+----------+-----------+--------+
+```
 | codigo |          titulo           | autor_id | editorial | precio |
-+--------+---------------------------+----------+-----------+--------+
+|--------|---------------------------|----------|-----------|--------|
 | 16     | The Count of Monte Cristo | 18       | Pétion    | 27.99  |
-+--------+---------------------------+----------+-----------+--------+
-**/
 
--- Obtener todos los autores cuyo nombre tiene exactamente 6 caracteres:
 
+17. Obtener todos los autores cuyo nombre tiene exactamente 6 caracteres:
+```sql
 select * from autor where nombre regexp '^......$';
-
-/**
+```
 No se retorna nada pues no hay autores con un nombre de exactamente 6 carácteres.
-**/
 
--- Seleccionar los libros cuyo título contiene al menos un número:
 
+18. Seleccionar los libros cuyo título contiene al menos un número:
+```sql
 select * from libro where titulo regexp '\d+';
-
-/**
+```
 No se retorna nada pues no hay libros cuyo título contenga al menos un número.
-**/
 
--- Obtener todos los autores cuyo nombre inicia con una vocal:
-
+19. Obtener todos los autores cuyo nombre inicia con una vocal:
+```sql
 select * from autor where nombre regexp '^[aeiouAEIOU]';
-
-/**
-+----+-----------------+
+```
 | id |     nombre      |
-+----+-----------------+
+|----|-----------------|
 | 5  | Agatha Christie |
-+----+-----------------+
-**/
 
--- Obtener todos los autores cuyo nombre no contiene espacios en blanco:
-
+20. Obtener todos los autores cuyo nombre no contiene espacios en blanco:
+```sql
 select * from autor where nombre not regexp '\s';
-
-/**
+```
 Se retorna vacío pues no existen nombres de autores que no contengan espacios en blanco.
-**/
 
--- Seleccionar los libros cuyo título termina con una vocal:
 
+21. Seleccionar los libros cuyo título termina con una vocal:
+```sql
 select * from libro where titulo regexp '[aeiouAEIOU]$';
-
-/**
-+--------+-------------------------------+----------+---------------------------+--------+
+```
 | codigo |            titulo             | autor_id |         editorial         | precio |
-+--------+-------------------------------+----------+---------------------------+--------+
+|--------|-------------------------------|----------|---------------------------|--------|
 | 3      | The Catcher in the Rye        | 8        | Little, Brown and Company | 18.75  |
 | 4      | One Hundred Years of Solitude | 9        | Harper & Row              | 22.5   |
 | 8      | The Chronicles of Narnia      | 11       | Geoffrey Bles             | 28.99  |
@@ -336,25 +290,20 @@ select * from libro where titulo regexp '[aeiouAEIOU]$';
 | 22     | Don Quixote                   | 24       | Francisco de Robles       | 26.75  |
 | 24     | Anna Karenina                 | 26       | The Russian Messenger     | 23.99  |
 | 28     | War and Peace                 | 26       | The Russian Messenger     | 33.25  |
-+--------+-------------------------------+----------+---------------------------+--------+
-**/
 
--- Obtener todos los autores cuyo nombre contiene la secuencia "er":
 
+22. Obtener todos los autores cuyo nombre contiene la secuencia "er":
+```sql
 select * from autor where nombre regexp 'er';
-
-/**
+```
 Se retorna vacío pues no existen autores que tengan la secuencia 'er' en su nombre.
-**/
 
--- Seleccionar los libros cuyo título empieza con la palabra "The":
-
+23. Seleccionar los libros cuyo título empieza con la palabra "The":
+```sql
 select * from libro where titulo regexp '^The';
-
-/**
-+--------+-----------------------------------+----------+---------------------------+--------+
+```
 | codigo |              titulo               | autor_id |         editorial         | precio |
-+--------+-----------------------------------+----------+---------------------------+--------+
+|--------|-----------------------------------|----------|---------------------------|--------|
 | 1      | The Great Gatsby                  | 6        | Charles Scribner's Sons   | 20.99  |
 | 3      | The Catcher in the Rye            | 8        | Little, Brown and Company | 18.75  |
 | 6      | The Hobbit                        | 10       | George Allen & Unwin      | 24.99  |
@@ -372,33 +321,26 @@ select * from libro where titulo regexp '^The';
 | 23     | The Divine Comedy                 | 25       | Dante Alighieri           | 20.5   |
 | 26     | The Jungle Book                   | 28       | Macmillan Publishers      | 14.99  |
 | 27     | The Wind in the Willows           | 29       | Methuen & Co.             | 17.5   |
-+--------+-----------------------------------+----------+---------------------------+--------+
-**/
 
--- Obtener todos los autores cuyo nombre tiene al menos una letra mayúscula:
 
+24. Obtener todos los autores cuyo nombre tiene al menos una letra mayúscula:
+```sql
 select * from autor where nombre regexp '[A-Z]+';
-
-/**
-+----+-----------------+
+```
 | id |     nombre      |
-+----+-----------------+
+|----|-----------------|
 | 1  | J.K. Rowling    |
 | 2  | Stephen King    |
 | 3  | George Orwell   |
 | 4  | Jane Austen     |
 | 5  | Agatha Christie |
-+----+-----------------+
-**/
 
--- Seleccionar los libros cuyo precio es un número decimal con exactamente dos decimales:
-
+25. Seleccionar los libros cuyo precio es un número decimal con exactamente dos decimales:
+```sql
 select * from libro where precio regexp '\.\d{2}$';
-
-/**
-+--------+-----------------------------------+----------+---------------------------------------------+--------+
+```
 | codigo |              titulo               | autor_id |                  editorial                  | precio |
-+--------+-----------------------------------+----------+---------------------------------------------+--------+
+|--------|-----------------------------------|----------|---------------------------------------------|--------|
 | 1      | The Great Gatsby                  | 6        | Charles Scribner's Sons                     | 20.99  |
 | 2      | To Kill a Mockingbird             | 7        | J.B. Lippincott & Co.                       | 15.95  |
 | 3      | The Catcher in the Rye            | 8        | Little, Brown and Company                   | 18.75  |
@@ -421,52 +363,42 @@ select * from libro where precio regexp '\.\d{2}$';
 | 26     | The Jungle Book                   | 28       | Macmillan Publishers                        | 14.99  |
 | 28     | War and Peace                     | 26       | The Russian Messenger                       | 33.25  |
 | 29     | Crime and Punishment              | 30       | The Russian Messenger                       | 19.99  |
-+--------+-----------------------------------+----------+---------------------------------------------+--------+
-**/
 
--- Obtener todos los autores cuyo nombre no contiene números:
-
+26. Obtener todos los autores cuyo nombre no contiene números:
+```sql
 select * from autor where nombre regexp '\D';
-
-/**
-+----+-----------------+
+```
 | id |     nombre      |
-+----+-----------------+
+|----|-----------------|
 | 1  | J.K. Rowling    |
 | 2  | Stephen King    |
 | 3  | George Orwell   |
 | 4  | Jane Austen     |
 | 5  | Agatha Christie |
-+----+-----------------+
-**/
 
--- Seleccionar los libros cuyo título contiene al menos tres vocales:
-
+27. Seleccionar los libros cuyo título contiene al menos tres vocales:
+```sql
 select * from libro where titulo regexp '[aeiouAEIOU]{3,}'; -- Preguntar por esta consulta.
+```
 
--- Obtener todos los autores cuyo nombre inicia con una consonante:
-
+28. Obtener todos los autores cuyo nombre inicia con una consonante:
+```sql
 select * from autor where nombre regexp '^[a-zA-Z]' and nombre not regexp '^[aeiouAEIOU]';
-
-/**
-+----+---------------+
+```
 | id |    nombre     |
-+----+---------------+
+|----|---------------|
 | 1  | J.K. Rowling  |
 | 2  | Stephen King  |
 | 3  | George Orwell |
 | 4  | Jane Austen   |
-+----+---------------+
-**/
 
--- Seleccionar los libros cuyo título no contiene la palabra "Science":
 
+29. Seleccionar los libros cuyo título no contiene la palabra "Science":
+```sql
 select * from libro where titulo not regexp 'Science';
-
-/**
-+--------+-----------------------------------+----------+---------------------------------------------+--------+
+```
 | codigo |              titulo               | autor_id |                  editorial                  | precio |
-+--------+-----------------------------------+----------+---------------------------------------------+--------+
+|--------|-----------------------------------|----------|---------------------------------------------|--------|
 | 1      | The Great Gatsby                  | 6        | Charles Scribner's Sons                     | 20.99  |
 | 2      | To Kill a Mockingbird             | 7        | J.B. Lippincott & Co.                       | 15.95  |
 | 3      | The Catcher in the Rye            | 8        | Little, Brown and Company                   | 18.75  |
@@ -496,49 +428,36 @@ select * from libro where titulo not regexp 'Science';
 | 27     | The Wind in the Willows           | 29       | Methuen & Co.                               | 17.5   |
 | 28     | War and Peace                     | 26       | The Russian Messenger                       | 33.25  |
 | 29     | Crime and Punishment              | 30       | The Russian Messenger                       | 19.99  |
-+--------+-----------------------------------+----------+---------------------------------------------+--------+
-**/
 
--- Obtener todos los autores cuyo nombre tiene al menos una letra repetida consecutivamente:
-
+30. Obtener todos los autores cuyo nombre tiene al menos una letra repetida consecutivamente:
+```sql
 select * from autor where nombre regexp '[a-zA-Z]{2}';
-
-/**
-+----+-----------------+
+```
 | id |     nombre      |
-+----+-----------------+
+|----|-----------------|
 | 1  | J.K. Rowling    |
 | 2  | Stephen King    |
 | 3  | George Orwell   |
 | 4  | Jane Austen     |
 | 5  | Agatha Christie |
-+----+-----------------+
-**/
 
--- Obtener todos los autores cuyo nombre empieza con "M" o termina con "n":
 
+31. Obtener todos los autores cuyo nombre empieza con "M" o termina con "n":
+```sql
 select * from autor where nombre regexp '^M' or nombre regexp 'n$';
-
-/**
-+----+-------------+
+```
 | id |   nombre    |
-+----+-------------+
+|----|-------------|
 | 4  | Jane Austen |
-+----+-------------+
-**/
 
--- Obtener todos los autores cuyo nombre no contiene caracteres especiales:
-
+32. Obtener todos los autores cuyo nombre no contiene caracteres especiales:
+```sql
 select * from autor where nombre regexp '[a-zA-Z]' or nombre regexp '[0-9]';
-
-/**
-+----+-----------------+
+```
 | id |     nombre      |
-+----+-----------------+
+|----|-----------------|
 | 1  | J.K. Rowling    |
 | 2  | Stephen King    |
 | 3  | George Orwell   |
 | 4  | Jane Austen     |
 | 5  | Agatha Christie |
-+----+-----------------+
-**/
