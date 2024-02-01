@@ -432,7 +432,7 @@ select * from libro where titulo not regexp 'Science';
 
 30. Obtener todos los autores cuyo nombre tiene al menos una letra repetida consecutivamente:
 ```sql
-select * from autor where nombre regexp '[a-zA-Z]{2}';
+select * from autor where nombre regexp '[a-zA-Z]{2,}';
 ```
 | id |     nombre      |
 |----|-----------------|
