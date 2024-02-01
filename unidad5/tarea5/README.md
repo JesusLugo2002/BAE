@@ -445,8 +445,9 @@ select * from autor where nombre regexp '[a-zA-Z]{2}';
 
 31. Obtener todos los autores cuyo nombre empieza con "M" o termina con "n":
 ```sql
-select * from autor where nombre regexp '^M' or nombre regexp 'n$';
+select * from autor where nombre regexp '^M|n$';
 ```
+NO SALE POR BUG.
 | id |   nombre    |
 |----|-------------|
 | 4  | Jane Austen |
