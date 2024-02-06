@@ -10,6 +10,8 @@
 
 ## Consultas
 
+A continuación las consultas realizadas para la actividad; [aquí puede encontrar el mismo ejercicio resuelto en el formato .sql](consultas-bbdd.sql).
+
 #### 1. Listar los coches vendidos con sus modelos y precios, junto con los nombres de los clientes que los compraron.
 
 ```sql
@@ -30,8 +32,15 @@ select co.marca, co.modelo, co.precio, cl.nombre as nombre_cliente from coches a
 #### 2. Encontrar los clientes que han comprado coches con precios superiores al promedio de todos los coches vendidos.
 
 ```sql
-
+select cl.* from clientes as cl, ventas as v, coches as co where cl.id_cliente = v.id_cliente and co.id_coche = v.id_coche and co.precio > (select avg(precio) from coches);
 ```
+| id_cliente |     nombre      | edad |   direccion    |
+|------------|-----------------|------|----------------|
+| 3          | Carlos López    | 35   | Calle C #789   |
+| 5          | Pedro Rodríguez | 40   | Calle E #234   |
+| 8          | Isabel Díaz     | 38   | Avenida H #111 |
+| 10         | Elena Torres    | 29   | Avenida J #333 |
+
 
 #### 3. Mostrar los modelos de coches y sus precios que no han sido vendidos aún:
 
@@ -82,41 +91,89 @@ select marca, modelo, max(precio) as precio_máximo from coches;
 #### 7. Mostrar los clientes que han comprado al menos un coche (un coche o más) y la cantidad de coches comprados.
 
 ```sql
-
+select cl.id_cliente, cl.nombre, count(v.id_cliente) as coches_comprados from clientes as cl, ventas as v where cl.id_cliente = v.id_cliente group by cl.id_cliente;
 ```
+| id_cliente |     nombre      | coches_comprados |
+|------------|-----------------|------------------|
+| 1          | Juan Pérez      | 1                |
+| 2          | María Gómez     | 1                |
+| 3          | Carlos López    | 1                |
+| 4          | Ana Martínez    | 1                |
+| 5          | Pedro Rodríguez | 1                |
+| 6          | Laura Sánchez   | 1                |
+| 7          | Miguel González | 1                |
+| 8          | Isabel Díaz     | 1                |
+| 10         | Elena Torres    | 1                |
+
 
 #### 8. Encontrar los clientes que han comprado coches de la marca 'Toyota':
 
 ```sql
-select * from clientes where id_cliente
+select cl.id_cliente, cl.nombre from clientes as cl, ventas as v, coches as co where cl.id_cliente = v.id_cliente and co.id_coche = v.id_coche and co.marca = 'Toyota';
 ```
+| id_cliente |   nombre   |
+|------------|------------|
+| 1          | Juan Pérez |
+
 
 #### 9. Calcular el promedio de edad de los clientes que han comprado coches de más de 25,000.
 
 ```sql
-
+select round(avg(cl.edad), 2) as edad_promedio from clientes as cl, ventas as v, coches as co where cl.id_cliente = v.id_cliente and co.id_coche = v.id_coche and co.precio > 25000;
 ```
+| edad_promedio |
+|---------------|
+| 32.83         |
+
 
 #### 10. Mostrar los modelos de coches y sus precios que fueron comprados por clientes mayores de 30 años.
 
 ```sql
-
+select co.modelo, co.precio from coches as co, ventas as v, clientes as cl where co.id_coche = v.id_coche and cl.id_cliente = v.id_cliente and cl.edad > 30;
 ```
+|     modelo     | precio  |
+|----------------|---------|
+| SUV 2023       | 30000.0 |
+| Camioneta 2023 | 32000.0 |
+| Compacto 2021  | 20000.0 |
+| Deportivo 2023 | 35000.0 |
+
 
 #### 11. Encontrar los coches vendidos en el año 2022 junto con la cantidad total de ventas en ese año.
 
 ```sql
-
+select co.*, count(v.id_coche) vendidos_2022 from coches as co, ventas as v where co.id_coche = v.id_coche and v.fecha_venta regexp '2022-' group by co.id_coche;
 ```
+    No se devuelve resultado pues no se cumplen las condiciones.
+
 
 #### 12. Listar los coches cuyos precios son mayores que el precio promedio de coches vendidos a clientes menores de 30 años.
 
 ```sql
-
+select * from coches where precio > (select avg(co.precio) from coches as co, ventas as v, clientes as cl where co.id_coche = v.id_coche and cl.id_cliente = v.id_cliente and cl.edad < 30);
 ```
+| id_coche |     modelo     | marca  | año  | precio  |
+|----------|----------------|--------|------|---------|
+| 3        | SUV 2023       | Ford   | 2023 | 30000.0 |
+| 5        | Camioneta 2023 | Nissan | 2023 | 32000.0 |
+| 8        | Deportivo 2023 | Mazda  | 2023 | 35000.0 |
+| 9        | Pickup 2022    | Ram    | 2022 | 31000.0 |
+| 10       | Eléctrico 2021 | Tesla  | 2021 | 40000.0 |
+
 
 #### 13. Calcular el total de ventas por marca de coche, ordenado de forma descendente por el total de ventas:
 
 ```sql
-
+select co.marca, count(v.id_coche) as total_ventas from coches as co, ventas as v where v.id_coche = co.id_coche group by v.id_coche order by total_ventas desc;
 ```
+|   marca    | total_ventas |
+|------------|--------------|
+| Tesla      | 1            |
+| Mazda      | 1            |
+| Hyundai    | 1            |
+| Volkswagen | 1            |
+| Nissan     | 1            |
+| Chevrolet  | 1            |
+| Ford       | 1            |
+| Honda      | 1            |
+| Toyota     | 1            |
