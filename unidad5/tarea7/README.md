@@ -1,4 +1,4 @@
-# Ejercicios de consultas con regexp y funciones
+# Ejercicios de subconsultas (expresiones regulares y funciones matemáticas)
 
 <div align=center>
     
