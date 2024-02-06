@@ -1,5 +1,9 @@
 -- Consulta para obtener el nombre y la edad de los clientes que han comprado coches de la marca Toyota.
+select cl.nombre, cl.edad from clientes as cl, ventas as v, coches as co where cl.id_cliente = v.id_cliente and co.id_coche = v.id_coche and co.marca = 'Toyota';
+
 -- Consulta para calcular el precio promedio de los coches vendidos.
+select 
+
 -- Consulta para obtener el modelo y la marca de los coches vendidos a clientes menores de 30 años.
 -- Consulta para contar el número de coches vendidos de cada marca.
 -- Consulta para obtener el nombre y la dirección de los clientes que han llevado a reparar sus coches en 2024.
