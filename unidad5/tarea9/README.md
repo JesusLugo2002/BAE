@@ -132,5 +132,38 @@ select a.nombre, a.edad, c.materia from alumnos as a join inscripciones as i on 
 
 
 #### 8. Obtener el nombre del alumno, la dirección y el profesor de las clases en las que está inscrito.
+```sql
+select a.nombre, a.direccion, c.profesor from alumnos as a join inscripciones as i on a.id=i.id_alumno join clases as c on c.id=i.id_clase;
+```
+| nombre | direccion |  profesor  |
+|--------|-----------|------------|
+| Juan   | Calle A   | Profesor X |
+| Juan   | Calle A   | Profesor Y |
+| María  | Calle B   | Profesor Z |
+| María  | Calle B   | Profesor W |
+| Pedro  | Calle C   | Profesor V |
+| Pedro  | Calle C   | Profesor U |
+| Laura  | Calle D   | Profesor T |
+| Laura  | Calle D   | Profesor S |
+| Carlos | Calle E   | Profesor R |
+| Ana    | Calle F   | Profesor Q |
+
 #### 9. Obtener el nombre del alumno y la materia de las clases en las que está inscrito, ordenado por el nombre del alumno.
+```sql
+select a.nombre, c.materia from alumnos as a join inscripciones as i on a.id=i.id_alumno join clases as c on c.id=i.id_clase order by a.nombre;
+```
+| nombre |   materia   |
+|--------|-------------|
+| Ana    | Derecho     |
+| Carlos | Economía    |
+| Juan   | Matemáticas |
+| Juan   | Historia    |
+| Laura  | Arte        |
+| Laura  | Idiomas     |
+| María  | Literatura  |
+| María  | Biología    |
+| Pedro  | Química     |
+| Pedro  | Física      |
+
+
 #### 10. Contar cuántos alumnos están inscritos en cada clase.
