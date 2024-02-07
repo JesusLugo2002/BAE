@@ -1,4 +1,4 @@
-# Ejercicios de subconsultas (expresiones regulares y funciones matemáticas)
+# Ejercicios de subconsultas (uso del Join)
 
 <div align=center>
     
@@ -167,3 +167,18 @@ select a.nombre, c.materia from alumnos as a join inscripciones as i on a.id=i.i
 
 
 #### 10. Contar cuántos alumnos están inscritos en cada clase.
+```sql
+select c.nombre as clase, count(a.id) as alumnos_inscritos from alumnos as a join inscripciones as i on a.id=i.id_alumno join clases as c on c.id=i.id_clase group by clase; 
+```
+|         clase          | alumnos_inscritos |
+|------------------------|-------------------|
+| Arte Contemporáneo     | 1                 |
+| Biología Avanzada      | 1                 |
+| Derecho Penal          | 1                 |
+| Economía Internacional | 1                 |
+| Física Cuántica        | 1                 |
+| Historia Antigua       | 1                 |
+| Inglés Avanzado        | 1                 |
+| Literatura Moderna     | 1                 |
+| Matemáticas 101        | 1                 |
+| Química Orgánica       | 1                 |
