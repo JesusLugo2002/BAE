@@ -198,8 +198,38 @@ select distinct(cl.nombre), cl.direccion from clientes as cl, coches as co, vent
 
 
 #### 18. Consulta para calcular el precio medio de los coches vendidos en 2023 y llevados a reparar por clientes menores de 30 años.
-
-
+```sql
+select round(avg(co.precio), 2) as precio_medio from coches as co, ventas as v, clientes as cl, reparacion as r where co.id_coche = v.id_coche and cl.id_cliente = v.id_cliente and v.fecha_venta regexp '2023' and r.id_cliente in (select id_cliente from clientes where edad < 30);
+```
+| precio_medio |
+|--------------|
+| 28777.78     |
 
 #### 19. Consulta para obtener el modelo y el año de los coches vendidos por clientes que tienen una dirección que contiene la palabra "Avenida".
+```sql
+select co.modelo, co.año from coches as co, ventas as v, clientes as cl where co.id_coche = v.id_coche and cl.id_cliente = v.id_cliente and cl.direccion regexp 'Avenida';
+```
+|     modelo     | año  |
+|----------------|------|
+| Hatchback 2021 | 2021 |
+| Coupé 2022     | 2022 |
+| Compacto 2021  | 2021 |
+| Deportivo 2023 | 2023 |
+| Eléctrico 2021 | 2021 |
+
 #### 20. Consulta para contar el número de reparaciones realizadas en 2024 por cada cliente.
+```sql
+select cl.nombre, count(r.id_reparación) as reparaciones from reparacion as r, clientes as cl where cl.id_cliente = r.id_cliente and r.fecha_reparación regexp '2024' group by cl.nombre;
+```
+|     nombre      | reparaciones |
+|-----------------|--------------|
+| Ana Martínez    | 1            |
+| Carlos López    | 1            |
+| Elena Torres    | 2            |
+| Francisco Ruiz  | 2            |
+| Isabel Díaz     | 1            |
+| Juan Pérez      | 1            |
+| Laura Sánchez   | 1            |
+| María Gómez     | 1            |
+| Miguel González | 1            |
+| Pedro Rodríguez | 1            |
