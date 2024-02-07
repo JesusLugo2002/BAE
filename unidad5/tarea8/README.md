@@ -178,7 +178,28 @@ select co.marca, co.modelo, co.precio from coches as co, clientes as cl, ventas 
 
 
 #### 16. Consulta para calcular el precio total de los coches vendidos a clientes que viven en una calle (en la dirección).
+```sql
+select sum(co.precio) as precio_total from coches as co, ventas as v, clientes as cl where co.id_coche = v.id_coche and cl.id_cliente = v.id_cliente and cl.direccion regexp 'Calle';
+```
+| precio_total |
+|--------------|
+| 114000.0     |
+
+
 #### 17. Consulta para obtener el nombre y la dirección de los clientes que han comprado coches de más de 30000 euros y llevado a reparar sus coches en 2024.
+```sql
+select distinct(cl.nombre), cl.direccion from clientes as cl, coches as co, ventas as v, reparacion as r where cl.id_cliente = v.id_cliente and co.id_coche = v.id_coche and co.id_coche = r.id_coche and co.precio > 30000 and r.fecha_reparación regexp '2024';
+```
+|     nombre      |   direccion    |
+|-----------------|----------------|
+| Pedro Rodríguez | Calle E #234   |
+| Isabel Díaz     | Avenida H #111 |
+| Elena Torres    | Avenida J #333 |
+
+
 #### 18. Consulta para calcular el precio medio de los coches vendidos en 2023 y llevados a reparar por clientes menores de 30 años.
+
+
+
 #### 19. Consulta para obtener el modelo y el año de los coches vendidos por clientes que tienen una dirección que contiene la palabra "Avenida".
 #### 20. Consulta para contar el número de reparaciones realizadas en 2024 por cada cliente.
