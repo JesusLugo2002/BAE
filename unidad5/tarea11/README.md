@@ -1,4 +1,4 @@
-# Ejercicios de consultas con regexp y funciones
+# Ejercicios de repaso
 
 <div align=center>
     
