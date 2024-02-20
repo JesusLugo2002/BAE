@@ -106,7 +106,7 @@ select id, nombre, apellido1 from cliente where apellido2 is null order by apell
 */
 
 -- Devuelve un listado de los nombres de los clientes que empiezan por A y terminan por n y también los nombres que empiezan por P. El listado deberá estar ordenado alfabéticamente.
-select nombre from cliente where nombre regexp '^A.*n$' order by nombre;
+select nombre from cliente where nombre regexp '^A.*n$' or nombre regexp '^P' order by nombre;
 
 /*
 ┌────────┐
@@ -114,6 +114,8 @@ select nombre from cliente where nombre regexp '^A.*n$' order by nombre;
 ├────────┤
 │ Aarón  │
 │ Adrián │
+│ Pepe   │
+│ Pilar  │
 └────────┘
 */
 
