@@ -365,41 +365,252 @@ select ciudad, max(categoria) as max_categoria from cliente group by ciudad;
 */
 
 -- Calcula cuál es el máximo valor de los pedidos realizados durante el mismo día para cada uno de los clientes. Es decir, el mismo cliente puede haber realizado varios pedidos de diferentes cantidades el mismo día. Se pide que se calcule cuál es el pedido de máximo valor para cada uno de los días en los que un cliente ha realizado un pedido. Muestra el identificador del cliente, nombre, apellidos, la fecha y el valor de la cantidad.
+select p.id_cliente, c.nombre, c.apellido1 || ' ' || coalesce(c.apellido2, '') as apellidos, p.fecha as fecha_pedido, max(p.total) as max_pedido from cliente as c join pedido as p on c.id = p.id_cliente group by p.id_cliente, fecha_pedido;
+
+/*
+┌────────────┬────────┬────────────────┬──────────────┬────────────┐
+│ id_cliente │ nombre │   apellidos    │ fecha_pedido │ max_pedido │
+├────────────┼────────┼────────────────┼──────────────┼────────────┤
+│ 1          │ Aarón  │ Rivero Gómez   │ 2016-09-10   │ 270.65     │
+│ 1          │ Aarón  │ Rivero Gómez   │ 2019-03-11   │ 2389.23    │
+│ 2          │ Adela  │ Salas Díaz     │ 2015-09-10   │ 5760.0     │
+│ 2          │ Adela  │ Salas Díaz     │ 2017-04-25   │ 3045.6     │
+│ 2          │ Adela  │ Salas Díaz     │ 2017-10-05   │ 65.26      │
+│ 3          │ Adolfo │ Rubio Flores   │ 2016-08-17   │ 75.29      │
+│ 4          │ Adrián │ Suárez         │ 2017-10-10   │ 1983.43    │
+│ 5          │ Marcos │ Loyola Méndez  │ 2017-09-10   │ 948.5      │
+│ 5          │ Marcos │ Loyola Méndez  │ 2017-10-05   │ 150.5      │
+│ 6          │ María  │ Santana Moreno │ 2017-02-02   │ 145.82     │
+│ 6          │ María  │ Santana Moreno │ 2019-01-25   │ 545.75     │
+│ 7          │ Pilar  │ Ruiz           │ 2016-07-27   │ 2400.6     │
+│ 8          │ Pepe   │ Ruiz Santana   │ 2015-06-27   │ 250.45     │
+│ 8          │ Pepe   │ Ruiz Santana   │ 2016-08-17   │ 110.5      │
+│ 8          │ Pepe   │ Ruiz Santana   │ 2016-10-10   │ 2480.4     │
+└────────────┴────────┴────────────────┴──────────────┴────────────┘
+*/
 
 -- Calcula cuál es el máximo valor de los pedidos realizados durante el mismo día para cada uno de los clientes, teniendo en cuenta que sólo queremos mostrar aquellos pedidos que superen la cantidad de 2000 €.
+select p.id_cliente, c.nombre, c.apellido1 || ' ' || coalesce(c.apellido2, '') as apellidos, p.fecha as fecha_pedido, max(p.total) as max_pedido from cliente as c join pedido as p on c.id = p.id_cliente where p.total > 2000 group by p.id_cliente, fecha_pedido;
+
+/*
+┌────────────┬────────┬──────────────┬──────────────┬────────────┐
+│ id_cliente │ nombre │  apellidos   │ fecha_pedido │ max_pedido │
+├────────────┼────────┼──────────────┼──────────────┼────────────┤
+│ 1          │ Aarón  │ Rivero Gómez │ 2019-03-11   │ 2389.23    │
+│ 2          │ Adela  │ Salas Díaz   │ 2015-09-10   │ 5760.0     │
+│ 2          │ Adela  │ Salas Díaz   │ 2017-04-25   │ 3045.6     │
+│ 7          │ Pilar  │ Ruiz         │ 2016-07-27   │ 2400.6     │
+│ 8          │ Pepe   │ Ruiz Santana │ 2016-10-10   │ 2480.4     │
+└────────────┴────────┴──────────────┴──────────────┴────────────┘
+*/
 
 -- Calcula el máximo valor de los pedidos realizados para cada uno de los comerciales durante la fecha 2016-08-17. Muestra el identificador del comercial, nombre, apellidos y total.
+select p.id_comercial, co.nombre, co.apellido1 || ' ' || coalesce(co.apellido2, '') as apellidos, max(p.total) as max_total from comercial as co join pedido as p on co.id = p.id_comercial where p.fecha = '2016-08-17' group by p.id_comercial;
+
+/*
+┌──────────────┬─────────┬────────────────┬───────────┐
+│ id_comercial │ nombre  │   apellidos    │ max_total │
+├──────────────┼─────────┼────────────────┼───────────┤
+│ 3            │ Diego   │ Flores Salas   │ 110.5     │
+│ 7            │ Antonio │ Vega Hernández │ 75.29     │
+└──────────────┴─────────┴────────────────┴───────────┘
+*/
 
 -- Devuelve un listado con el identificador de cliente, nombre y apellidos y el número total de pedidos que ha realizado cada uno de clientes. Tenga en cuenta que pueden existir clientes que no han realizado ningún pedido. Estos clientes también deben aparecer en el listado indicando que el número de pedidos realizados es 0.
+select c.id, c.nombre, c.apellido1 || ' ' || coalesce(c.apellido2, '') as apellidos, coalesce(count(p.id_cliente), 0) as pedidos_realizados from cliente as c left join pedido as p on c.id = p.id_cliente group by c.id;
+
+/*
+┌────┬───────────┬────────────────┬────────────────────┐
+│ id │  nombre   │   apellidos    │ pedidos_realizados │
+├────┼───────────┼────────────────┼────────────────────┤
+│ 1  │ Aarón     │ Rivero Gómez   │ 3                  │
+│ 2  │ Adela     │ Salas Díaz     │ 3                  │
+│ 3  │ Adolfo    │ Rubio Flores   │ 1                  │
+│ 4  │ Adrián    │ Suárez         │ 1                  │
+│ 5  │ Marcos    │ Loyola Méndez  │ 2                  │
+│ 6  │ María     │ Santana Moreno │ 2                  │
+│ 7  │ Pilar     │ Ruiz           │ 1                  │
+│ 8  │ Pepe      │ Ruiz Santana   │ 3                  │
+│ 9  │ Guillermo │ López Gómez    │ 0                  │
+│ 10 │ Daniel    │ Santana Loyola │ 0                  │
+└────┴───────────┴────────────────┴────────────────────┘
+*/
 
 -- Devuelve un listado con el identificador de cliente, nombre y apellidos y el número total de pedidos que ha realizado cada uno de clientes durante el año 2017.
+select c.id, c.nombre, c.apellido1 || ' ' || coalesce(c.apellido2, '') as apellidos, coalesce(count(p.id_cliente), 0) as pedidos_realizados from cliente as c left join pedido as p on c.id = p.id_cliente where p.fecha regexp '2017' group by c.id;
+
+/*
+┌────┬────────┬────────────────┬────────────────────┐
+│ id │ nombre │   apellidos    │ pedidos_realizados │
+├────┼────────┼────────────────┼────────────────────┤
+│ 2  │ Adela  │ Salas Díaz     │ 2                  │
+│ 4  │ Adrián │ Suárez         │ 1                  │
+│ 5  │ Marcos │ Loyola Méndez  │ 2                  │
+│ 6  │ María  │ Santana Moreno │ 1                  │
+└────┴────────┴────────────────┴────────────────────┘
+*/
 
 -- Devuelve un listado que muestre el identificador de cliente, nombre, primer apellido y el valor de la máxima cantidad del pedido realizado por cada uno de los clientes. El resultado debe mostrar aquellos clientes que no han realizado ningún pedido indicando que la máxima cantidad de sus pedidos realizados es 0.
+select c.id, c.nombre, c.apellido1, coalesce(max(p.total), 0) as max_total from cliente as c left join pedido as p on c.id = p.id_cliente group by c.id;
+
+/*
+┌────┬───────────┬───────────┬───────────┐
+│ id │  nombre   │ apellido1 │ max_total │
+├────┼───────────┼───────────┼───────────┤
+│ 1  │ Aarón     │ Rivero    │ 2389.23   │
+│ 2  │ Adela     │ Salas     │ 5760.0    │
+│ 3  │ Adolfo    │ Rubio     │ 75.29     │
+│ 4  │ Adrián    │ Suárez    │ 1983.43   │
+│ 5  │ Marcos    │ Loyola    │ 948.5     │
+│ 6  │ María     │ Santana   │ 545.75    │
+│ 7  │ Pilar     │ Ruiz      │ 2400.6    │
+│ 8  │ Pepe      │ Ruiz      │ 2480.4    │
+│ 9  │ Guillermo │ López     │ 0         │
+│ 10 │ Daniel    │ Santana   │ 0         │
+└────┴───────────┴───────────┴───────────┘
+*/
 
 -- Devuelve cuál ha sido el pedido de máximo valor que se ha realizado cada año.
+select substr(fecha, 1, 4) as año, max(total) as max_valor from pedido group by año;
+
+/*
+┌──────┬───────────┐
+│ año  │ max_valor │
+├──────┼───────────┤
+│ 2015 │ 5760.0    │
+│ 2016 │ 2480.4    │
+│ 2017 │ 3045.6    │
+│ 2019 │ 2389.23   │
+└──────┴───────────┘
+*/
 
 -- Devuelve el número total de pedidos que se han realizado cada año.
+select substr(fecha, 1, 4) as año, count(id) as pedidos from pedido group by año;
+
+/*
+┌──────┬─────────┐
+│ año  │ pedidos │
+├──────┼─────────┤
+│ 2015 │ 2       │
+│ 2016 │ 5       │
+│ 2017 │ 6       │
+│ 2019 │ 3       │
+└──────┴─────────┘
+*/
 
 -- Subconsultas con operadores básicos de comparación
 
 -- Devuelve un listado con todos los pedidos que ha realizado Adela Salas Díaz. (Sin utilizar INNER JOIN).
+select * from pedido where id_cliente in (select id_cliente from cliente where nombre = 'Adela' and apellido1 = 'Salas' and apellido2 = 'Díaz');
+
+/*
+┌────┬────────┬────────────┬────────────┬──────────────┐
+│ id │ total  │   fecha    │ id_cliente │ id_comercial │
+├────┼────────┼────────────┼────────────┼──────────────┤
+│ 3  │ 65.26  │ 2017-10-05 │ 2          │ 1            │
+│ 7  │ 5760.0 │ 2015-09-10 │ 2          │ 1            │
+│ 12 │ 3045.6 │ 2017-04-25 │ 2          │ 1            │
+└────┴────────┴────────────┴────────────┴──────────────┘
+*/
 
 -- Devuelve el número de pedidos en los que ha participado el comercial Daniel Sáez Vega. (Sin utilizar INNER JOIN)
+select * from pedido where id_comercial in (select id from comercial where nombre = 'Daniel' and apellido1 = 'Sáez' and apellido2 = 'Vega');
+
+/*
+┌────┬────────┬────────────┬────────────┬──────────────┐
+│ id │ total  │   fecha    │ id_cliente │ id_comercial │
+├────┼────────┼────────────┼────────────┼──────────────┤
+│ 3  │ 65.26  │ 2017-10-05 │ 2          │ 1            │
+│ 6  │ 2400.6 │ 2016-07-27 │ 7          │ 1            │
+│ 7  │ 5760.0 │ 2015-09-10 │ 2          │ 1            │
+│ 12 │ 3045.6 │ 2017-04-25 │ 2          │ 1            │
+│ 13 │ 545.75 │ 2019-01-25 │ 6          │ 1            │
+│ 14 │ 145.82 │ 2017-02-02 │ 6          │ 1            │
+└────┴────────┴────────────┴────────────┴──────────────┘
+*/
 
 -- Devuelve los datos del cliente que realizó el pedido más caro en el año 2019. (Sin utilizar INNER JOIN)
+select c.* from cliente as c, pedido as p where c.id = p.id_cliente and p.total in (select max(total) from pedido where fecha regexp '2019');
+
+/*
+┌────┬────────┬───────────┬───────────┬─────────┬───────────┐
+│ id │ nombre │ apellido1 │ apellido2 │ ciudad  │ categoria │
+├────┼────────┼───────────┼───────────┼─────────┼───────────┤
+│ 1  │ Aarón  │ Rivero    │ Gómez     │ Almería │ 100       │
+└────┴────────┴───────────┴───────────┴─────────┴───────────┘
+*/
 
 -- Devuelve la fecha y la cantidad del pedido de menor valor realizado por el cliente Pepe Ruiz Santana.
+select fecha, min(total) as min_valor from pedido where id_cliente in (select id from cliente where nombre = 'Pepe' and apellido1 = 'Ruiz' and apellido2 = 'Santana');
+
+/*
+┌────────────┬───────────┐
+│   fecha    │ min_valor │
+├────────────┼───────────┤
+│ 2016-08-17 │ 110.5     │
+└────────────┴───────────┘
+*/
 
 -- Devuelve un listado con los datos de los clientes y los pedidos, de todos los clientes que han realizado un pedido durante el año 2017 con un valor mayor o igual al valor medio de los pedidos realizados durante ese mismo año.
+select c.*, p.fecha as fecha_pedido, p.total, p.id_comercial from cliente as c, pedido as p where c.id = p.id_cliente and p.fecha regexp '2017' and p.total >= (select avg(total) from pedido where fecha regexp '2017');
+
+/*
+┌────┬────────┬───────────┬───────────┬─────────┬───────────┬──────────────┬─────────┬──────────────┐
+│ id │ nombre │ apellido1 │ apellido2 │ ciudad  │ categoria │ fecha_pedido │  total  │ id_comercial │
+├────┼────────┼───────────┼───────────┼─────────┼───────────┼──────────────┼─────────┼──────────────┤
+│ 4  │ Adrián │ Suárez    │           │ Jaén    │ 300       │ 2017-10-10   │ 1983.43 │ 6            │
+│ 2  │ Adela  │ Salas     │ Díaz      │ Granada │ 200       │ 2017-04-25   │ 3045.6  │ 1            │
+└────┴────────┴───────────┴───────────┴─────────┴───────────┴──────────────┴─────────┴──────────────┘
+*/
 
 -- Subconsultas con IN y NOT IN
 
 -- Devuelve un listado de los clientes que no han realizado ningún pedido. (Utilizando IN o NOT IN).
+select * from cliente where id not in (select id_cliente from pedido);
+
+/*
+┌────┬───────────┬───────────┬───────────┬─────────┬───────────┐
+│ id │  nombre   │ apellido1 │ apellido2 │ ciudad  │ categoria │
+├────┼───────────┼───────────┼───────────┼─────────┼───────────┤
+│ 9  │ Guillermo │ López     │ Gómez     │ Granada │ 225       │
+│ 10 │ Daniel    │ Santana   │ Loyola    │ Sevilla │ 125       │
+└────┴───────────┴───────────┴───────────┴─────────┴───────────┘
+*/
 
 -- Devuelve un listado de los comerciales que no han realizado ningún pedido. (Utilizando IN o NOT IN).
+select * from comercial where id not in (select id_comercial from pedido);
+
+/*
+┌────┬─────────┬───────────┬───────────┬───────────┐
+│ id │ nombre  │ apellido1 │ apellido2 │ categoria │
+├────┼─────────┼───────────┼───────────┼───────────┤
+│ 4  │ Marta   │ Herrera   │ Gil       │ 0.14      │
+│ 8  │ Alfredo │ Ruiz      │ Flores    │ 0.05      │
+└────┴─────────┴───────────┴───────────┴───────────┘
+*/
 
 -- Subconsultas con EXISTS y NOT EXISTS
 
 -- Devuelve un listado de los clientes que no han realizado ningún pedido. (Utilizando EXISTS o NOT EXISTS).
+select * from cliente where not exists (select 1 from pedido where cliente.id = pedido.id_cliente);
+
+/*
+┌────┬───────────┬───────────┬───────────┬─────────┬───────────┐
+│ id │  nombre   │ apellido1 │ apellido2 │ ciudad  │ categoria │
+├────┼───────────┼───────────┼───────────┼─────────┼───────────┤
+│ 9  │ Guillermo │ López     │ Gómez     │ Granada │ 225       │
+│ 10 │ Daniel    │ Santana   │ Loyola    │ Sevilla │ 125       │
+└────┴───────────┴───────────┴───────────┴─────────┴───────────┘
+*/
 
 -- Devuelve un listado de los comerciales que no han realizado ningún pedido. (Utilizando EXISTS o NOT EXISTS).
+select * from comercial where not exists (select 1 from pedido where comercial.id = pedido.id_comercial);
+
+/*
+┌────┬─────────┬───────────┬───────────┬───────────┐
+│ id │ nombre  │ apellido1 │ apellido2 │ categoria │
+├────┼─────────┼───────────┼───────────┼───────────┤
+│ 4  │ Marta   │ Herrera   │ Gil       │ 0.14      │
+│ 8  │ Alfredo │ Ruiz      │ Flores    │ 0.05      │
+└────┴─────────┴───────────┴───────────┴───────────┘
+*/
