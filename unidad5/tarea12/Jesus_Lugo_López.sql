@@ -471,11 +471,11 @@ select c.id, c.nombre, c.apellido1, coalesce(max(p.total), 0) as max_total from 
 */
 
 -- Devuelve cuál ha sido el pedido de máximo valor que se ha realizado cada año.
-select substr(fecha, 1, 4) as año, max(total) as max_valor from pedido group by año;
+select strftime('%Y', fecha) as anio, max(total) as max_valor from pedido group by anio;
 
 /*
 ┌──────┬───────────┐
-│ año  │ max_valor │
+│ anio │ max_valor │
 ├──────┼───────────┤
 │ 2015 │ 5760.0    │
 │ 2016 │ 2480.4    │
@@ -485,11 +485,11 @@ select substr(fecha, 1, 4) as año, max(total) as max_valor from pedido group by
 */
 
 -- Devuelve el número total de pedidos que se han realizado cada año.
-select substr(fecha, 1, 4) as año, count(id) as pedidos from pedido group by año;
+select strftime('%Y', fecha) as anio, count(id) as pedidos from pedido group by anio;
 
 /*
 ┌──────┬─────────┐
-│ año  │ pedidos │
+│ anio │ pedidos │
 ├──────┼─────────┤
 │ 2015 │ 2       │
 │ 2016 │ 5       │
