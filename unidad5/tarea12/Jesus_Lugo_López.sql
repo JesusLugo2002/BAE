@@ -516,19 +516,14 @@ select * from pedido where id_cliente in (select id_cliente from cliente where n
 */
 
 -- Devuelve el número de pedidos en los que ha participado el comercial Daniel Sáez Vega. (Sin utilizar INNER JOIN)
-select * from pedido where id_comercial in (select id from comercial where nombre = 'Daniel' and apellido1 = 'Sáez' and apellido2 = 'Vega');
+select count(id) as pedidos from pedido where id_comercial in (select id from comercial where nombre = 'Daniel' and apellido1 = 'Sáez' and apellido2 = 'Vega');
 
 /*
-┌────┬────────┬────────────┬────────────┬──────────────┐
-│ id │ total  │   fecha    │ id_cliente │ id_comercial │
-├────┼────────┼────────────┼────────────┼──────────────┤
-│ 3  │ 65.26  │ 2017-10-05 │ 2          │ 1            │
-│ 6  │ 2400.6 │ 2016-07-27 │ 7          │ 1            │
-│ 7  │ 5760.0 │ 2015-09-10 │ 2          │ 1            │
-│ 12 │ 3045.6 │ 2017-04-25 │ 2          │ 1            │
-│ 13 │ 545.75 │ 2019-01-25 │ 6          │ 1            │
-│ 14 │ 145.82 │ 2017-02-02 │ 6          │ 1            │
-└────┴────────┴────────────┴────────────┴──────────────┘
+┌─────────┐
+│ pedidos │
+├─────────┤
+│ 6       │
+└─────────┘
 */
 
 -- Devuelve los datos del cliente que realizó el pedido más caro en el año 2019. (Sin utilizar INNER JOIN)
