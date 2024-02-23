@@ -202,22 +202,35 @@ select distinct p.* from persona as p join alumno_se_matricula_asignatura as a o
 
 1. Devuelve un listado con los nombres de todos los profesores y los departamentos que tienen vinculados. El listado también debe mostrar aquellos profesores que no tienen ningún departamento asociado. El listado debe devolver cuatro columnas, nombre del departamento, primer apellido, segundo apellido y nombre del profesor. El resultado estará ordenado alfabéticamente de menor a mayor por el nombre del departamento, apellidos y el nombre.
 ```sql
-select count(pro.id_profesor) from persona as p, profesor as pro, departamento as d where p.id = pro.id_profesor and d.id = pro.id_departamento;
+select d.nombre as departamento, p.apellido1, p.apellido2, p.nombre from persona as p, profesor as pro, departamento as d where p.id = pro.id_profesor and d.id = pro.id_departamento;
 
 
 select id_profesor from profesor where id_profesor not in (select p.id from persona as p, profesor as pro, departamento as d where p.id = pro.id_profesor and d.id = pro.id_departamento);
 
 select count(pro.id_profesor) from persona as p join profesor as pro on p.id = pro.id_profesor left join departamento as d on pro.id_departamento = d.id;
-
-
-
 ```
 
 2. Devuelve un listado con los profesores que no están asociados a un departamento.
+```sql
+select * from persona where tipo = 'profesor' and id not in (select p.id from persona as p, profesor as pro, departamento as d where p.id = pro.id_profesor and d.id = pro.id_departamento);
+```
+> No se devuelve tabla pues no se cumplen los requisitos.
     
 3. Devuelve un listado con los departamentos que no tienen profesores asociados.
+```sql
+select * from departamento where id not in (select id_departamento from profesor);
+```
+| id |       nombre        |
+|----|---------------------|
+| 7  | Filología           |
+| 8  | Derecho             |
+| 9  | Biología y Geología |
+
 
 4. Devuelve un listado con los profesores que no imparten ninguna asignatura.
+```sql
+
+```
 
 5. Devuelve un listado con las asignaturas que no tienen un profesor asignado.
 
@@ -227,12 +240,53 @@ select count(pro.id_profesor) from persona as p join profesor as pro on p.id = p
 ## Consultas resúmen (Funciones)
 
 1. Devuelve el número total de alumnas que hay.
+```sql
+select count(id) as alumnas from persona where sexo = 'M' and tipo = 'alumno';
+```
+| alumnas |
+|---------|
+| 3       |
+
 
 2. Calcula cuántos alumnos nacieron en 1999.
+```sql
+select count(id) as alumnos from persona where tipo = 'alumno' and fecha_nacimiento regexp '1999';
+```
+| alumnos |
+|---------|
+| 2       |
+
 
 3. Calcula cuántos profesores hay en cada departamento. El resultado sólo debe mostrar dos columnas, una con el nombre del departamento y otra con el número de profesores que hay en ese departamento. El resultado sólo debe incluir los departamentos que tienen profesores asociados y deberá estar ordenado de mayor a menor por el número de profesores.
+```sql
+select d.nombre as nombre_departamento, count(pro.id_profesor) as profesores from profesor as pro join departamento as d on d.id = pro.id_departamento group by nombre_departamento order by profesores desc; 
+```
+| nombre_departamento | profesores |
+|---------------------|------------|
+| Educación           | 3          |
+| Química y Física    | 2          |
+| Matemáticas         | 2          |
+| Informática         | 2          |
+| Economía y Empresa  | 2          |
+| Agronomía           | 1          |
+
 
 4. Devuelve un listado con todos los departamentos y el número de profesores que hay en cada uno de ellos. Tenga en cuenta que pueden existir departamentos que no tienen profesores asociados. Estos departamentos también tienen que aparecer en el listado.
+```sql
+select d.*, (select count(*) from profesor as p where p.id_departamento = d.id) as profesores from departamento as d group by d.id;
+```
+| id |       nombre        | profesores |
+|----|---------------------|------------|
+| 1  | Informática         | 2          |
+| 2  | Matemáticas         | 2          |
+| 3  | Economía y Empresa  | 2          |
+| 4  | Educación           | 3          |
+| 5  | Agronomía           | 1          |
+| 6  | Química y Física    | 2          |
+| 7  | Filología           | 0          |
+| 8  | Derecho             | 0          |
+| 9  | Biología y Geología | 0          |
+
 
 5. Devuelve un listado con el nombre de todos los grados existentes en la base de datos y el número de asignaturas que tiene cada uno. Tenga en cuenta que pueden existir grados que no tienen asignaturas asociadas. Estos grados también tienen que aparecer en el listado. El resultado deberá estar ordenado de mayor a menor por el número de asignaturas.
 
