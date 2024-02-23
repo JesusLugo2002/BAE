@@ -247,12 +247,38 @@ select count(pro.id_profesor) from persona as p join profesor as pro on p.id = p
 ## Subconsultas
 
 1. Devuelve todos los datos del alumno más joven.
+```sql
+select * from persona as p where tipo = 'alumno' and fecha_nacimiento = (select max(fecha_nacimiento) from persona where tipo = 'alumno');
+```
+┌────┬───────────┬────────┬───────────┬───────────┬─────────┬───────────────────┬──────────┬──────────────────┬──────┬────────┐
+│ id │    nif    │ nombre │ apellido1 │ apellido2 │ ciudad  │     direccion     │ telefono │ fecha_nacimiento │ sexo │  tipo  │
+├────┼───────────┼────────┼───────────┼───────────┼─────────┼───────────────────┼──────────┼──────────────────┼──────┼────────┤
+│ 4  │ 17105885A │ Pedro  │ Heller    │ Pagac     │ Almería │ C/ Estrella fugaz │          │ 2000/10/05       │ H    │ alumno │
+└────┴───────────┴────────┴───────────┴───────────┴─────────┴───────────────────┴──────────┴──────────────────┴──────┴────────┘
 
 2. Devuelve un listado con los profesores que no están asociados a un departamento.
+```sql
+select * from persona where tipo = 'profesor' and id not in (select id_profesor from profesor);
+```
+> No devuelve tabla pues no hay resultados para la consulta.
 
 3. Devuelve un listado con los departamentos que no tienen profesores asociados.
+```sql
+select * from departamento where id not in (select id_departamento from profesor);
+```
+┌────┬─────────────────────┐
+│ id │       nombre        │
+├────┼─────────────────────┤
+│ 7  │ Filología           │
+│ 8  │ Derecho             │
+│ 9  │ Biología y Geología │
+└────┴─────────────────────┘
+
     
 4. Devuelve un listado con los profesores que tienen un departamento asociado y que no imparten ninguna asignatura.
+```sql
+select p.* from persona as p join asignatura
+```
 
 5. Devuelve un listado con las asignaturas que no tienen un profesor asignado.
     
