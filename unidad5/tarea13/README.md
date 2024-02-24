@@ -202,23 +202,33 @@ select distinct p.* from persona as p join alumno_se_matricula_asignatura as a o
 
 1. Devuelve un listado con los nombres de todos los profesores y los departamentos que tienen vinculados. El listado también debe mostrar aquellos profesores que no tienen ningún departamento asociado. El listado debe devolver cuatro columnas, nombre del departamento, primer apellido, segundo apellido y nombre del profesor. El resultado estará ordenado alfabéticamente de menor a mayor por el nombre del departamento, apellidos y el nombre.
 ```sql
-select d.nombre as departamento, p.apellido1, p.apellido2, p.nombre from persona as p, profesor as pro, departamento as d where p.id = pro.id_profesor and d.id = pro.id_departamento;
-
-
-select id_profesor from profesor where id_profesor not in (select p.id from persona as p, profesor as pro, departamento as d where p.id = pro.id_profesor and d.id = pro.id_departamento);
-
-select count(pro.id_profesor) from persona as p join profesor as pro on p.id = pro.id_profesor left join departamento as d on pro.id_departamento = d.id;
+select coalesce(d.nombre, '') as departamento, p.apellido1, p.apellido2, p.nombre from departamento as d, persona as p, profesor as pro where p.id = pro.id_profesor and pro.id_departamento = d.id or pro.id_departamento is null order by departamento, p.apellido1, p.apellido2, p.nombre;
 ```
+|    departamento    | apellido1  | apellido2  |  nombre   |
+|--------------------|------------|------------|-----------|
+| Agronomía          | Monahan    | Murray     | Micaela   |
+| Economía y Empresa | Fahey      | Considine  | Antonio   |
+| Economía y Empresa | Lemke      | Rutherford | Cristina  |
+| Educación          | Ruecker    | Upton      | Guillermo |
+| Educación          | Spencer    | Lakin      | Esther    |
+| Educación          | Streich    | Hirthe     | Carmen    |
+| Informática        | Hamill     | Kozey      | Manolo    |
+| Informática        | Ramirez    | Gea        | Zoe       |
+| Matemáticas        | Kohler     | Schoen     | Alejandro |
+| Matemáticas        | Schmidt    | Fisher     | David     |
+| Química y Física   | Schowalter | Muller     | Francesca |
+| Química y Física   | Stiedemann | Morissette | Alfredo   |
+
 
 2. Devuelve un listado con los profesores que no están asociados a un departamento.
 ```sql
-select * from persona where tipo = 'profesor' and id not in (select p.id from persona as p, profesor as pro, departamento as d where p.id = pro.id_profesor and d.id = pro.id_departamento);
+select p.* from persona as p, profesor as pro, departamento as d where p.id = pro.id_profesor and pro.id_departamento is null;
 ```
 > No se devuelve tabla pues no se cumplen los requisitos.
     
 3. Devuelve un listado con los departamentos que no tienen profesores asociados.
 ```sql
-select * from departamento where id not in (select id_departamento from profesor);
+select * from departamento where not exists (select 1 from profesor where profesor.id_departamento = departamento.id);
 ```
 | id |       nombre        |
 |----|---------------------|
@@ -229,12 +239,111 @@ select * from departamento where id not in (select id_departamento from profesor
 
 4. Devuelve un listado con los profesores que no imparten ninguna asignatura.
 ```sql
-
+select p.* from persona as p, profesor as pro where p.id = pro.id_profesor and not exists (select 1 from asignatura as a where a.id_profesor = pro.id_profesor);
 ```
+| id |    nif    |  nombre   | apellido1  | apellido2  | ciudad  |         direccion         | telefono  | fecha_nacimiento | sexo |   tipo   |
+|----|-----------|-----------|------------|------------|---------|---------------------------|-----------|------------------|------|----------|
+| 5  | 38223286T | David     | Schmidt    | Fisher     | Almería | C/ Venus                  | 678516294 | 1978/01/19       | H    | profesor |
+| 8  | 79503962T | Cristina  | Lemke      | Rutherford | Almería | C/ Saturno                | 669162534 | 1977/08/21       | M    | profesor |
+| 10 | 61142000L | Esther    | Spencer    | Lakin      | Almería | C/ Plutón                 |           | 1977/05/19       | M    | profesor |
+| 12 | 85366986W | Carmen    | Streich    | Hirthe     | Almería | C/ Almanzora              |           | 1971-04-29       | M    | profesor |
+| 13 | 73571384L | Alfredo   | Stiedemann | Morissette | Almería | C/ Guadalquivir           | 950896725 | 1980/02/01       | H    | profesor |
+| 15 | 80502866Z | Alejandro | Kohler     | Schoen     | Almería | C/ Tajo                   | 668726354 | 1980/03/14       | H    | profesor |
+| 16 | 10485008K | Antonio   | Fahey      | Considine  | Almería | C/ Sierra de los Filabres |           | 1982/03/18       | H    | profesor |
+| 17 | 85869555K | Guillermo | Ruecker    | Upton      | Almería | C/ Sierra de Gádor        |           | 1973/05/05       | H    | profesor |
+| 18 | 04326833G | Micaela   | Monahan    | Murray     | Almería | C/ Veleta                 | 662765413 | 1976/02/25       | H    | profesor |
+| 20 | 79221403L | Francesca | Schowalter | Muller     | Almería | C/ Quinto pino            |           | 1980/10/31       | H    | profesor |
+
 
 5. Devuelve un listado con las asignaturas que no tienen un profesor asignado.
+```sql
+select * from asignatura where id_profesor is null;
+```
+| id |                            nombre                            | creditos |    tipo     | curso | cuatrimestre | id_profesor | id_grado |
+|----|--------------------------------------------------------------|----------|-------------|-------|--------------|-------------|----------|
+| 22 | Ingeniería de Requisitos                                     | 6.0      | optativa    | 3     | 1            |             | 4        |
+| 23 | Integración de las Tecnologías de la Información en las Orga | 6.0      | optativa    | 3     | 1            |             | 4        |
+|    | nizaciones                                                   |          |             |       |              |             |          |
+| 24 | Modelado y Diseño del Software 1                             | 6.0      | optativa    | 3     | 1            |             | 4        |
+| 25 | Multiprocesadores                                            | 6.0      | optativa    | 3     | 1            |             | 4        |
+| 26 | Seguridad y cumplimiento normativo                           | 6.0      | optativa    | 3     | 1            |             | 4        |
+| 27 | Sistema de Información para las Organizaciones               | 6.0      | optativa    | 3     | 1            |             | 4        |
+| 28 | Tecnologías web                                              | 6.0      | optativa    | 3     | 1            |             | 4        |
+| 29 | Teoría de códigos y criptografía                             | 6.0      | optativa    | 3     | 1            |             | 4        |
+| 30 | Administración de bases de datos                             | 6.0      | optativa    | 3     | 2            |             | 4        |
+| 31 | Herramientas y Métodos de Ingeniería del Software            | 6.0      | optativa    | 3     | 2            |             | 4        |
+| 32 | Informática industrial y robótica                            | 6.0      | optativa    | 3     | 2            |             | 4        |
+| 33 | Ingeniería de Sistemas de Información                        | 6.0      | optativa    | 3     | 2            |             | 4        |
+| 34 | Modelado y Diseño del Software 2                             | 6.0      | optativa    | 3     | 2            |             | 4        |
+| 35 | Negocio Electrónico                                          | 6.0      | optativa    | 3     | 2            |             | 4        |
+| 36 | Periféricos e interfaces                                     | 6.0      | optativa    | 3     | 2            |             | 4        |
+| 37 | Sistemas de tiempo real                                      | 6.0      | optativa    | 3     | 2            |             | 4        |
+| 38 | Tecnologías de acceso a red                                  | 6.0      | optativa    | 3     | 2            |             | 4        |
+| 39 | Tratamiento digital de imágenes                              | 6.0      | optativa    | 3     | 2            |             | 4        |
+| 40 | Administración de redes y sistemas operativos                | 6.0      | optativa    | 4     | 1            |             | 4        |
+| 41 | Almacenes de Datos                                           | 6.0      | optativa    | 4     | 1            |             | 4        |
+| 42 | Fiabilidad y Gestión de Riesgos                              | 6.0      | optativa    | 4     | 1            |             | 4        |
+| 43 | Líneas de Productos Software                                 | 6.0      | optativa    | 4     | 1            |             | 4        |
+| 44 | Procesos de Ingeniería del Software 1                        | 6.0      | optativa    | 4     | 1            |             | 4        |
+| 45 | Tecnologías multimedia                                       | 6.0      | optativa    | 4     | 1            |             | 4        |
+| 46 | Análisis y planificación de las TI                           | 6.0      | optativa    | 4     | 2            |             | 4        |
+| 47 | Desarrollo Rápido de Aplicaciones                            | 6.0      | optativa    | 4     | 2            |             | 4        |
+| 48 | Gestión de la Calidad y de la Innovación Tecnológica         | 6.0      | optativa    | 4     | 2            |             | 4        |
+| 49 | Inteligencia del Negocio                                     | 6.0      | optativa    | 4     | 2            |             | 4        |
+| 50 | Procesos de Ingeniería del Software 2                        | 6.0      | optativa    | 4     | 2            |             | 4        |
+| 51 | Seguridad Informática                                        | 6.0      | optativa    | 4     | 2            |             | 4        |
+| 52 | Biologia celular                                             | 6.0      | básica      | 1     | 1            |             | 7        |
+| 53 | Física                                                       | 6.0      | básica      | 1     | 1            |             | 7        |
+| 54 | Matemáticas I                                                | 6.0      | básica      | 1     | 1            |             | 7        |
+| 55 | Química general                                              | 6.0      | básica      | 1     | 1            |             | 7        |
+| 56 | Química orgánica                                             | 6.0      | básica      | 1     | 1            |             | 7        |
+| 57 | Biología vegetal y animal                                    | 6.0      | básica      | 1     | 2            |             | 7        |
+| 58 | Bioquímica                                                   | 6.0      | básica      | 1     | 2            |             | 7        |
+| 59 | Genética                                                     | 6.0      | básica      | 1     | 2            |             | 7        |
+| 60 | Matemáticas II                                               | 6.0      | básica      | 1     | 2            |             | 7        |
+| 61 | Microbiología                                                | 6.0      | básica      | 1     | 2            |             | 7        |
+| 62 | Botánica agrícola                                            | 6.0      | obligatoria | 2     | 1            |             | 7        |
+| 63 | Fisiología vegetal                                           | 6.0      | obligatoria | 2     | 1            |             | 7        |
+| 64 | Genética molecular                                           | 6.0      | obligatoria | 2     | 1            |             | 7        |
+| 65 | Ingeniería bioquímica                                        | 6.0      | obligatoria | 2     | 1            |             | 7        |
+| 66 | Termodinámica y cinética química aplicada                    | 6.0      | obligatoria | 2     | 1            |             | 7        |
+| 67 | Biorreactores                                                | 6.0      | obligatoria | 2     | 2            |             | 7        |
+| 68 | Biotecnología microbiana                                     | 6.0      | obligatoria | 2     | 2            |             | 7        |
+| 69 | Ingeniería genética                                          | 6.0      | obligatoria | 2     | 2            |             | 7        |
+| 70 | Inmunología                                                  | 6.0      | obligatoria | 2     | 2            |             | 7        |
+| 71 | Virología                                                    | 6.0      | obligatoria | 2     | 2            |             | 7        |
+| 72 | Bases moleculares del desarrollo vegetal                     | 4.5      | obligatoria | 3     | 1            |             | 7        |
+| 73 | Fisiología animal                                            | 4.5      | obligatoria | 3     | 1            |             | 7        |
+| 74 | Metabolismo y biosíntesis de biomoléculas                    | 6.0      | obligatoria | 3     | 1            |             | 7        |
+| 75 | Operaciones de separación                                    | 6.0      | obligatoria | 3     | 1            |             | 7        |
+| 76 | Patología molecular de plantas                               | 4.5      | obligatoria | 3     | 1            |             | 7        |
+| 77 | Técnicas instrumentales básicas                              | 4.5      | obligatoria | 3     | 1            |             | 7        |
+| 78 | Bioinformática                                               | 4.5      | obligatoria | 3     | 2            |             | 7        |
+| 79 | Biotecnología de los productos hortofrutículas               | 4.5      | obligatoria | 3     | 2            |             | 7        |
+| 80 | Biotecnología vegetal                                        | 6.0      | obligatoria | 3     | 2            |             | 7        |
+| 81 | Genómica y proteómica                                        | 4.5      | obligatoria | 3     | 2            |             | 7        |
+| 82 | Procesos biotecnológicos                                     | 6.0      | obligatoria | 3     | 2            |             | 7        |
+| 83 | Técnicas instrumentales avanzadas                            | 4.5      | obligatoria | 3     | 2            |             | 7        |
+
 
 6. Devuelve un listado con todos los departamentos que tienen alguna asignatura que no se haya impartido en ningún curso escolar. El resultado debe mostrar el nombre del departamento y el nombre de la asignatura que no se haya impartido nunca.
+```sql
+select distinct d.nombre as departamento, a.nombre as asignatura from departamento as d, profesor as pro, asignatura as a where d.id = pro.id_departamento and pro.id_profesor = a.id_profesor and not exists (select asma.id_asignatura from alumno_se_matricula_asignatura as asma where asma.id_asignatura = a.id);
+```
+| departamento |                    asignatura                     |
+|--------------|---------------------------------------------------|
+| Informática  | Arquitectura de Computadores                      |
+| Informática  | Estructura de Datos y Algoritmos I                |
+| Informática  | Ingeniería del Software                           |
+| Informática  | Sistemas Inteligentes                             |
+| Informática  | Sistemas Operativos                               |
+| Informática  | Bases de Datos                                    |
+| Informática  | Estructura de Datos y Algoritmos II               |
+| Informática  | Fundamentos de Redes de Computadores              |
+| Informática  | Planificación y Gestión de Proyectos Informáticos |
+| Informática  | Programación de Servicios Software                |
+| Informática  | Desarrollo de interfaces de usuario               |
+
 
 
 ## Consultas resúmen (Funciones)
@@ -289,8 +398,26 @@ select d.*, (select count(*) from profesor as p where p.id_departamento = d.id) 
 
 
 5. Devuelve un listado con el nombre de todos los grados existentes en la base de datos y el número de asignaturas que tiene cada uno. Tenga en cuenta que pueden existir grados que no tienen asignaturas asociadas. Estos grados también tienen que aparecer en el listado. El resultado deberá estar ordenado de mayor a menor por el número de asignaturas.
+```sql
+select g.nombre as grado, coalesce(count(a.id), 0) as asignaturas from grado as g left join asignatura as a on g.id = a.id_grado group by grado order by asignaturas desc;
+```
+|                         grado                          | asignaturas |
+|--------------------------------------------------------|-------------|
+| Grado en Ingeniería Informática (Plan 2015)            | 51          |
+| Grado en Biotecnología (Plan 2015)                     | 32          |
+| Grado en Química (Plan 2009)                           | 0           |
+| Grado en Matemáticas (Plan 2010)                       | 0           |
+| Grado en Ingeniería Química Industrial (Plan 2010)     | 0           |
+| Grado en Ingeniería Mecánica (Plan 2010)               | 0           |
+| Grado en Ingeniería Eléctrica (Plan 2014)              | 0           |
+| Grado en Ingeniería Electrónica Industrial (Plan 2010) | 0           |
+| Grado en Ingeniería Agrícola (Plan 2015)               | 0           |
+| Grado en Ciencias Ambientales (Plan 2009)              | 0           |
 
 6. Devuelve un listado con el nombre de todos los grados existentes en la base de datos y el número de asignaturas que tiene cada uno, de los grados que tengan más de 40 asignaturas asociadas.
+```sql
+select g.nombre as grado, count(a.id) as asignaturas from grado as g join asignatura as a on g.id = a.id_grado group by grado having asignaturas > 40;
+```
 
 7. Devuelve un listado que muestre el nombre de los grados y la suma del número total de créditos que hay para cada tipo de asignatura. El resultado debe tener tres columnas: nombre del grado, tipo de asignatura y la suma de los créditos de todas las asignaturas que hay de ese tipo. Ordene el resultado de mayor a menor por el número total de crédidos.
 
