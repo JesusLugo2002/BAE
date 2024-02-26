@@ -8,6 +8,8 @@
 *Pez de la buena suerte.*
 Aquí todos mis ficheros de la asignatura de bases de datos.
 
+</div>
+
 > [!NOTE]  
 > Highlights information that users should take into account, even when skimming.
 
@@ -22,5 +24,3 @@ Aquí todos mis ficheros de la asignatura de bases de datos.
 
 > [!CAUTION]
 > Negative potential consequences of an action.
-
-</div>
