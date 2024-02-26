@@ -8,8 +8,7 @@
 *Pez de la buena suerte.*
 Aquí todos mis ficheros de la asignatura de bases de datos.
 
->[!NOTE] 
->
->Prueba con etiqueta
+> [!NOTE] 
+> Prueba con etiqueta
 
 </div>
