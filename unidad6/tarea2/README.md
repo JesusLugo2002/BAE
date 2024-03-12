@@ -551,7 +551,7 @@ select c.nombre as nombre_cliente, count(o.id_cliente) as total_ordenes from cli
 ```
   - 14. Mostrar todas las órdenes con sus clientes y productos, incluyendo las órdenes y productos que no tienen información.
 ```sql
-select o.*, p.nombre as nombre_producto, p.precio, c.nombre as nombre_cliente, c.direccion from clientes as c left join ordenes as o on o.id_cliente = c.id_cliente left join productos as p on o.id_producto = p.id_producto;
+select o.*, p.nombre as nombre_producto, p.precio, c.nombre as nombre_cliente, c.direccion from clientes as c left join ordenes as o on o.id_cliente = c.id_cliente right join productos as p on o.id_producto = p.id_producto;
 +----------+------------+-------------+----------+-----------------+--------+----------------+---------------+
 | id_orden | id_cliente | id_producto | cantidad | nombre_producto | precio | nombre_cliente | direccion     |
 +----------+------------+-------------+----------+-----------------+--------+----------------+---------------+
