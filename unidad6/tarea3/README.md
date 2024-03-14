@@ -106,7 +106,7 @@ select * from ordenes where id_cliente = 1;
 
 - Mostrar los clientes cuyos nombres comienzan con la letra "A".
 ```sql
-select * from clientes where nombre_cliente regexp '$A';
+select * from clientes where nombre_cliente regexp '^A';
 ```
 > No se arroja resultado porque no se cumplen los requisitos.
 
